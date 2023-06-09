@@ -1,0 +1,210 @@
+nav {
+    display: grid; /* 1 */
+}
+
+nav ul {
+    display: flex; /* 5 */
+    list-style: none;
+  }
+
+nav li {
+    text-decoration: none;
+}
+
+nav li + li:before{
+    content: " | ";
+    padding: 0 10px;
+}
+
+.navbar-elements{
+    background-color: rgb(94, 175, 246);
+}
+
+.navLink{
+    color: black
+}
+
+a:link { 
+    text-decoration: none; 
+    color: white;
+}
+
+a:visited { 
+    text-decoration: none;
+    color: white; 
+}
+
+a:hover { 
+    text-decoration: none;
+    color: darkblue;
+}
+
+a:active { 
+    text-decoration: none; 
+    color: white;
+}
+
+.header{
+    display: grid;
+    background-color: rgb(54, 54, 228);
+}
+
+.login-button{
+    grid-column: 20;
+    display: flex;
+    align-items: end;
+    text-decoration: none;
+    list-style: none;
+    padding-bottom: 10px;
+}
+
+.main-title{
+    color: white;
+    padding-left: 15px;
+}
+
+.body{
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    width: 80%;
+    height: 100%;
+    padding: 0px 5px 5px 5px;
+    
+}
+
+.profile-link{
+    background-color:  rgb(94, 175, 246);
+    padding: 5px;
+}
+
+.blog{
+    display: grid;
+}
+
+.new-blog{
+    height: 100px;
+    width: 500px;
+    margin-left: 10%;
+    text-align: start;
+}
+
+.new-blog-wrapper{
+    display: grid;
+}
+
+.new-blog-title{
+    text-align: center;
+}
+
+.new-blog-button{
+    margin-left: 10%;
+    width: 200px;
+}
+
+.new-blog-title-input{
+    height: auto;
+    width: 500px;
+    margin-left: 10%;
+}
+
+.new-blog-subject{
+    margin-left: 10%;
+}
+
+.new-blog-content{
+    margin-left: 10%;
+}
+
+.posts{
+    background-color:#b9bfff ;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+
+.post-body{
+    margin: 20px;
+    font-weight: normal !important;
+}
+
+.post-body h4.post-content {
+    font-weight: normal;
+  }
+
+.post-list{
+    margin-left: 10%;
+    width: 80%;
+}
+
+.banner{
+    font-family: "Arial Rounded", sans-serif;
+    color: white;
+    text-indent: 100px;
+    line-height: 0.5;
+    padding-top: 5px;
+    margin-top: 20px;
+    margin-left: auto;
+    width: 33%;
+    height: 90px;
+    background-color:#00FA9A;
+}
+
+.logout{
+    display: grid;
+}
+
+.logout-button{
+    margin-left: 49%;
+    margin-top: 10%;
+}
+
+.signup-wrapper, .login-route-wrapper{
+    display: grid;
+    padding: 20px;
+
+}
+
+.signup, .login-route{
+    margin-left: 34%;
+    margin-top: 30px;
+    max-width: 425px;
+    height: 350px;
+    background-color: rgb(161, 161, 244);
+
+}
+
+.signup h5, .login-route h5{
+    margin: 10px;
+}
+
+.signup-title, .login-route-title{
+    color: black;
+    margin-left: 10%;
+    margin-top: 5px;
+}
+
+.signup-input, .login-route-input{
+    height: 20px;
+    width: 300px;
+    margin-left: 10px;
+}
+
+.member-signup, .member-login{
+    margin: 20px;
+    padding: 10px;
+    color: aliceblue;
+    background-color: #b9bfff;
+    text-align: center;
+}
+
+.signup-button, .login-route-button{
+    margin-left: 12.4%;
+    height: 30px;
+    width: 308px;
+    background-color: #b9bfff;
+    border: none;
+    color: aliceblue;
+    font-weight: bold;
+    
+}
