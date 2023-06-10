@@ -1,7 +1,12 @@
+import { NavLink } from "react-router-dom"
+import Login from "./Login"
+
 function LandingPage(){
     return(
-        <div>
-            <h1>Hello World</h1>
+        <div className="login-button">
+            <div>
+                <Login/>
+            </div>
         </div>
     )
 }

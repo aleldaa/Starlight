@@ -1,0 +1,32 @@
+body{
+    margin: 0;
+}
+
+.main-title{
+    background-color: #212022;
+    
+}
+
+.init-title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.init-title h1{
+    color: #641a8c;
+
+    font-size: 40px;
+    font-weight: normal;
+}
+
+.logo{
+    max-height: 40px;
+    padding: 5px;
+    padding-right: 10px;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 7px;
+    /* background-color: #641a8c; */
+    border-radius: 50px;
+}

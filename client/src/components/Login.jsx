@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, NavLink } from 'react-router-dom'
 
 function Login({setUsers}){
     // const [user, setUser] = useState(null)
@@ -46,6 +46,9 @@ function Login({setUsers}){
                     <br></br>
                     <button className='login-route-button' type='submit'>Login</button>
                 </form>
+                <div>
+                <li><NavLink to='/signup' className='signuplink'>Sign Up</NavLink></li>
+                </div>
             </div>
         </div>
     )

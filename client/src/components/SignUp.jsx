@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
 
 function SignUp({updateUser}){
 
@@ -63,6 +63,9 @@ function SignUp({updateUser}){
                         <br></br>
                         <button className='signup-button' type="submit">Sign Up!</button>
                     </form>
+                    <div>
+                        <li><NavLink to='/login' className='loginlink'>Login</NavLink></li>
+                    </div>
                 </div>
             </div>
         )
