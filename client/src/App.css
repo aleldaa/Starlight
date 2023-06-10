@@ -14,7 +14,7 @@ body{
 }
 
 .init-title h1{
-    color: #641a8c;
+    color: #9f25e0;
 
     font-size: 40px;
     font-weight: normal;
@@ -29,4 +29,76 @@ body{
     margin-bottom: 7px;
     /* background-color: #641a8c; */
     border-radius: 50px;
+}
+
+.login-route-wrapper, .signup-wrapper{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.login-route, .signup{
+    width: 400px;
+    background-color: #232224;
+}
+
+.login-route-form, .signup-form{
+    padding-top: 27px;
+    padding-bottom: 50px;
+}
+
+.signup, .login-route{
+
+}
+
+.signup-switch, .login-switch{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 40px;
+    list-style: none;
+
+    
+}
+
+.signuplink, .loginlink{
+    text-decoration: none;
+    background-color: #3d3b40;
+    padding: 15px;
+    padding-top: 10px;
+    color: white;
+    border-radius: 5px;
+    list-style: none;
+}
+.signup h5, .login-route h5{
+    margin: 10px;
+}
+
+.signup-title, .login-route-title{
+    margin-left: 10%;
+    margin-top: 5px;
+}
+
+.signup-input, .login-route-input{
+    height: 20px;
+    width: 300px;
+    margin-left: 10px;
+}
+
+.member-signup, .member-login{
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+.signup-button, .login-route-button{
+    margin-left: 12.4%;
+    height: 30px;
+    width: 308px;
+    background-color: #3d3b40;
+    border: none;
+    color: aliceblue;
+    font-weight: bold;
+    
 }

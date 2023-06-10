@@ -32,22 +32,17 @@ function Login({setUsers}){
         <div className='login-route-wrapper'>
             <div className='login-route'>
                 <form className='login-route-form' onSubmit={handleSubmit}>
-                    <div className='member-login'>
-                        <h5>Member Login</h5>
-                    </div>
-                    <div className='login-route-title'>
-                        <h5>Username:</h5>    
-                        <input className='login-route-input' type='text' value={username} onChange={handleUsername} />
+                    <div className='login-route-title'>  
+                        <input className='login-route-input' placeholder='Username' type='text' value={username} onChange={handleUsername} />
                     </div>
                     <div className='login-route-title'>  
-                        <h5>Password:</h5>  
-                        <input className='login-route-input' type='password' value={password} onChange={handlePassword}/>
+                        <input className='login-route-input' placeholder='Passowrd' type='password' value={password} onChange={handlePassword}/>
                     </div>
                     <br></br>
                     <button className='login-route-button' type='submit'>Login</button>
                 </form>
-                <div>
-                <li><NavLink to='/signup' className='signuplink'>Sign Up</NavLink></li>
+                <div className='signup-switch'>
+                    <li><NavLink to='/signup' className='signuplink'>Create new account</NavLink></li>
                 </div>
             </div>
         </div>

@@ -45,25 +45,19 @@ function SignUp({updateUser}){
             <div className="signup-wrapper">
                 <div className="signup">
                     <form onSubmit={handleSubmit} className="signup-form">
-                        <div className="member-signup">
-                            <h5>Member Signup</h5>
+                        <div className='signup-title'>
+                            <input placeholder="Username" className='signup-input' type="text" value={username} onChange={handleUsername}/>
                         </div>
                         <div className='signup-title'>
-                            <h5>Username:</h5>
-                            <input className='signup-input' type="text" value={username} onChange={handleUsername}/>
+                            <input placeholder="Email" className='signup-input' type="text" value={email} onChange={handleEmail}/>
                         </div>
                         <div className='signup-title'>
-                            <h5>Email:</h5>
-                            <input className='signup-input' type="text" value={email} onChange={handleEmail}/>
-                        </div>
-                        <div className='signup-title'>
-                            <h5>Password:</h5>
-                            <input className='signup-input' type="password" value={password} onChange={handlePassword}/>
+                            <input placeholder="Password" className='signup-input' type="password" value={password} onChange={handlePassword}/>
                         </div>
                         <br></br>
                         <button className='signup-button' type="submit">Sign Up!</button>
                     </form>
-                    <div>
+                    <div className="login-switch">
                         <li><NavLink to='/login' className='loginlink'>Login</NavLink></li>
                     </div>
                 </div>
