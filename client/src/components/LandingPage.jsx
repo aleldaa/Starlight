@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom"
 import Login from "./Login"
 
-function LandingPage(){
+function LandingPage({setUsers}){
     return(
         <div className="login-button">
             <div>
-                <Login/>
+                <Login setUsers={setUsers}/>
             </div>
         </div>
     )

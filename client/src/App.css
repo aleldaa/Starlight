@@ -4,6 +4,7 @@ body{
 
 .main-title{
     background-color: #212022;
+
     
 }
 
@@ -14,14 +15,14 @@ body{
 }
 
 .init-title h1{
-    color: #9f25e0;
+    color: #b967e6;
 
     font-size: 40px;
     font-weight: normal;
 }
 
 .logo{
-    max-height: 40px;
+    max-height: 50px;
     padding: 5px;
     padding-right: 10px;
     margin-left: 20px;
@@ -49,9 +50,9 @@ body{
     padding-bottom: 50px;
 }
 
-.signup, .login-route{
+/* .signup, .login-route{
 
-}
+} */
 
 .signup-switch, .login-switch{
     display: flex;
@@ -101,4 +102,39 @@ body{
     color: aliceblue;
     font-weight: bold;
     
+}
+
+.logout-icon{
+    text-decoration: none;
+    width: 30px;
+}
+
+.logout-button{
+    display: inline-block;
+    position: absolute;
+    right: 25px;
+    top: 30px;
+
+}
+
+.navbar{
+display: flex;
+flex-wrap: wrap;
+}
+
+.header{
+    width: 100%;
+    position: relative;
+}
+
+.home-icon, .message-icon, .profile-icon{
+    width: 30px;
+    padding: 10px;
+}
+
+.navbar-elements{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

@@ -10,6 +10,8 @@ import NavBarInitial from './components/NavBarInitial'
 import HomePage from './components/HomePage'
 import Logout from './components/Logout'
 import LandingPage from './components/LandingPage'
+import Messages from './components/Messages'
+import Profile from './components/Profile'
 
 
 function App() {
@@ -29,7 +31,7 @@ function App() {
     <div className='body'>
     <NavBarInitial onChangePage={setPage} />
     <Routes>
-      <Route path='/' element={<LandingPage/>}/>
+      <Route path='/' element={<LandingPage setUsers={setUsers}/>}/>
       <Route path='/signup' element={<SignUp updateUser={updateUser}/>}/>
       <Route path='/login' element={<Login setUsers={setUsers}/>}/>
     </Routes>
@@ -37,10 +39,12 @@ function App() {
   )
   return (
     <div className='body'>
-      <NavBar onChangePage={setPage}/>
+      <NavBar setUsers={setUsers} onChangePage={setPage}/>
       <Routes>
         <Route path="/logout" element={<Logout setUsers={setUsers}/>}/>
         <Route path='/home' element={<HomePage/>}/>
+        <Route path='/messages' element={<Messages/>}/>
+        <Route path='/profile' element={<Profile/>}/>
       </Routes>
     </div>
   )
