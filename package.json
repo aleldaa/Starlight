@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "jquery": "^3.7.0",
+    "jsdom": "^22.1.0",
     "react-router-dom": "^6.11.2"
   }
 }

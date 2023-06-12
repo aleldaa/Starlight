@@ -12,6 +12,7 @@ import Logout from './components/Logout'
 import LandingPage from './components/LandingPage'
 import Messages from './components/Messages'
 import Profile from './components/Profile'
+import Friends from './components/Friends'
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
         <Route path='/home' element={<HomePage/>}/>
         <Route path='/messages' element={<Messages/>}/>
         <Route path='/profile' element={<Profile/>}/>
+        <Route path='/friends' element={<Friends/>}/>
       </Routes>
     </div>
   )

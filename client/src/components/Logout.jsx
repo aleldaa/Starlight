@@ -5,7 +5,7 @@ function Logout({setUsers}){
 
 
     return(
-        <div >
+        <div>
         </div>
     )
 }

@@ -32,6 +32,9 @@ function NavBar({setUsers}){
                             <NavLink to='/messages' className='navLink'>
                                 <img className="message-icon" src="/src/images/chat.png"/>
                             </NavLink>
+                            <NavLink to='/friends' className='navLink'>
+                                <img className="friends-icon" src="/src/images/learning.png"/>
+                            </NavLink>
                     </div>
                     <div className="logout-button">
                         <NavLink onClick={handleLogout} to='/logout' className='logoutlink'>
