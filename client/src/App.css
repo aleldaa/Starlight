@@ -142,7 +142,7 @@ flex-wrap: wrap;
 .popup {
     position: absolute;
     /* display: inline-block; */
-    top: 20%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -196,6 +196,10 @@ flex-wrap: wrap;
     padding: 15px;
     border-radius: 50px;
     width: 400px;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
 .homepage-wrapper{

@@ -8,10 +8,9 @@ from flask_restful import Resource
 
 # Local imports
 from config import app, db, api, bcrypt
-from models import User, Post, Message, Friend
+from models import User, Post, Message
 # Views go here!
 
-# Lauren unable to pull for some reason
 class Users(Resource):
     
     def get(self):
