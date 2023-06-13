@@ -35,11 +35,11 @@ function HomePage({}){
                 </div>
                 <div className="popup">
                     <span className="popuptext" id="myPopup">
+                    <button className='exit'>X</button>
                         <form>
                             <textarea type="text" className="popup-input" placeholder="Write your post."/>
                             <button type="submit" className=""></button>
                         </form>
-                        <button className='exit'>X</button>
                     </span>
                 </div>
                 <div className=''></div>

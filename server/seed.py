@@ -132,4 +132,16 @@ def generate_seed_data():
 
 if __name__ == '__main__':
     with app.app_context():
+        print("Starting seed...")
+
+        User.query.delete()
+        Post.query.delete()
+        Message.query.delete()
+        Friend.query.delete()
+        Interest.query.delete()
+        Like.query.delete()
+        Comment.query.delete()
+
         generate_seed_data()
+
+        print("Data seeded successfully.")

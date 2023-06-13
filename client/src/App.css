@@ -127,7 +127,7 @@ flex-wrap: wrap;
     position: relative;
 }
 
-.home-icon, .message-icon, .profile-icon, .friends-icon{
+.home-icon, .message-icon, .profile-icon, .friends-icon, .music-icon{
     width: 30px;
     padding: 30px;
 }
@@ -185,22 +185,22 @@ flex-wrap: wrap;
     border-color: #555 transparent transparent transparent;
   } */
 
-  .popup .show {
-    visibility: visible;
-  }
+.popup .show {
+visibility: visible;
+}
 
-  .popup-title h5{
-    color: #b967e6;
-    font-weight: normal;
-    background-color: #212022;
-    padding: 15px;
-    border-radius: 50px;
-    width: 400px;
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+.popup-title h5{
+color: #b967e6;
+font-weight: normal;
+background-color: #212022;
+padding: 15px;
+border-radius: 50px;
+width: 400px;
+position: absolute;
+top: 20%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
 
 .homepage-wrapper{
     

@@ -13,6 +13,7 @@ import LandingPage from './components/LandingPage'
 import Messages from './components/Messages'
 import Profile from './components/Profile'
 import Friends from './components/Friends'
+import Music from './components/Music'
 
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
         <Route path='/messages' element={<Messages/>}/>
         <Route path='/profile' element={<Profile/>}/>
         <Route path='/friends' element={<Friends/>}/>
+        <Route path='/music' element={<Music/>}/>
       </Routes>
     </div>
   )

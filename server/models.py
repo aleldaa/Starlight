@@ -8,7 +8,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-posts.user', '-messages_sent.sender', '-messages_recieved.reciever', '-friends.user_friend', '-users.user_user', '-friends.user_user', '-users.user_friend')
+    serialize_rules = ('-posts.user', '-messages_sent.sender', '-messages_received.receiver', '-friends.user_friend', '-users.user_user', '-friends.user_user', '-users.user_friend')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -24,8 +24,8 @@ class User(db.Model, SerializerMixin):
     posts = db.relationship('Post', backref='user')
     messages_sent = db.relationship('Message', backref='sender', foreign_keys='Message.sender_id')
     messages_received = db.relationship('Message', backref='receiver', foreign_keys='Message.receiver_id')
-    friends = db.relationship('Friend', backref='user_friend', foreign_keys='Friend.friend_id')
-    users = db.relationship('Friend', backref='user_user', foreign_keys='Friend.user_id')
+    friends = db.relationship('Friend', backref='user_friend', foreign_keys='Friend.user_id')
+    users = db.relationship('Friend', backref='user_user', foreign_keys='Friend.friend_id')
     interests = db.relationship('Interest', backref='user', lazy=True)
 
     @validates('username')
@@ -105,7 +105,7 @@ class Message(db.Model, SerializerMixin):
 class Friend(db.Model, SerializerMixin):
     __tablename__ = 'friends'
 
-    serialize_rules = ('-user_user.users', '-user_friend.friends' '-user_user.friends', '-user_friend.users')
+    serialize_rules = ('-user_user.users', '-user_friend.friends', '-user_user.friends', '-user_friend.users')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -113,20 +113,6 @@ class Friend(db.Model, SerializerMixin):
     status = db.Column(db.String, nullable=False)
 
     __table_args__ = (db.UniqueConstraint('user_id', 'friend_id'),)
-
-    # @validates('user_id')
-    # def validate_user_id(self, key, user_id):
-    #     user = User.query.get(user_id)
-    #     if not user:
-    #         raise ValueError("Invalid user_id. User does not exist.")
-    #     return user_id
-    
-    # @validates('friend_id')
-    # def validate_friend_id(self, key, friend_id):
-    #     friend = User.query.filter_by(id=friend_id).first()
-    #     if not friend:
-    #         raise ValueError("Invalid friend_id. User does not exist.")
-    #     return friend_id
 
 class Interest(db.Model, SerializerMixin):
     __tablename__ = 'interests'
@@ -154,6 +140,16 @@ class Like(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    song_id = db.Column(db.Integer, db.ForeignKey('songs.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
 
+class Song(db.Model, SerializerMixin):
+    __tablename__ = 'songs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    artist = db.Column(db.String)
+    album = db.Column(db.String)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
