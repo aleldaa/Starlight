@@ -1,26 +1,24 @@
-body{
+body {
     margin: 0;
 }
 
-.main-title{
+.main-title {
     background-color: #212022;
-
-    
 }
 
-.init-title{
+.init-title {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.init-title h1{
+.init-title h1 {
     color: #b967e6;
     font-size: 40px;
     font-weight: normal;
 }
 
-.logo{
+.logo {
     max-height: 50px;
     padding: 5px;
     padding-right: 10px;
@@ -31,39 +29,37 @@ body{
     border-radius: 50px;
 }
 
-.login-route-wrapper, .signup-wrapper{
+.login-route-wrapper,
+.signup-wrapper {
     list-style: none;
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
 
-.login-route, .signup{
+.login-route,
+.signup {
     width: 400px;
     background-color: #232224;
     border-radius: 5px;
 }
 
-.login-route-form, .signup-form{
+.login-route-form,
+.signup-form {
     padding-top: 27px;
     padding-bottom: 50px;
 }
 
-/* .signup, .login-route{
-
-} */
-
-.signup-switch, .login-switch{
+.signup-switch,
+.login-switch {
     display: flex;
     justify-content: center;
     padding-bottom: 40px;
     list-style: none;
-
-    
 }
 
-.signuplink, .loginlink{
+.signuplink,
+.loginlink {
     text-decoration: none;
     background-color: #3d3b40;
     padding: 15px;
@@ -72,28 +68,34 @@ body{
     border-radius: 5px;
     list-style: none;
 }
-.signup h5, .login-route h5{
+
+.signup h5,
+.login-route h5 {
     margin: 10px;
 }
 
-.signup-title, .login-route-title{
+.signup-title,
+.login-route-title {
     margin-left: 10%;
     margin-top: 5px;
 }
 
-.signup-input, .login-route-input{
+.signup-input,
+.login-route-input {
     height: 20px;
     width: 300px;
     margin-left: 10px;
 }
 
-.member-signup, .member-login{
+.member-signup,
+.member-login {
     margin: 20px;
     padding: 10px;
     text-align: center;
 }
 
-.signup-button, .login-route-button{
+.signup-button,
+.login-route-button {
     margin-left: 12.4%;
     height: 30px;
     width: 308px;
@@ -101,107 +103,164 @@ body{
     border: none;
     color: aliceblue;
     font-weight: bold;
-    
 }
 
-.logout-icon{
+.logout-icon {
     text-decoration: none;
     width: 27px;
 }
 
-.logout-button{
+.logout-button {
     display: inline-block;
     position: absolute;
     right: 25px;
     top: 26px;
-
 }
 
-.navbar{
-display: flex;
-flex-wrap: wrap;
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.header{
+.header {
     width: 100%;
     position: relative;
 }
 
-.home-icon, .message-icon, .profile-icon, .friends-icon, .music-icon{
+.home-icon,
+.message-icon,
+.profile-icon,
+.friends-icon,
+.music-icon {
+    position: relative;
     width: 30px;
     padding: 30px;
 }
 
-.navbar-elements{
+.navbar-elements {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.popup {
-    position: absolute;
-    /* display: inline-block; */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    
-  }
+@media screen and (max-width: 600px) {
+    .navbar-elements {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-.popuptext{
-    padding: 15px;
-    width: 400px;
-    background-color: #212022;
-    position: absolute;
-    top: 250%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
+    .home-icon,
+    .message-icon,
+    .profile-icon,
+    .friends-icon,
+    .music-icon {
+        padding: 10px;
+        /* Adjust the padding to your desired spacing */
+    }
 }
 
-.popup .popuptext {
-    visibility: hidden;
-    color: #fff;
-    text-align: center;
-    border-radius: 2px;
-    /* padding: 8px 0; */
-    position: absolute;
-  }
+@media screen and (min-width: 601px) and (max-width: 1000px) {
+    .navbar-elements {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-
-  /* .popup .popuptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-  } */
+    .home-icon,
+    .message-icon,
+    .profile-icon,
+    .friends-icon,
+    .music-icon {
+        padding: 20px;
+        /* Adjust the padding to your desired spacing */
+    }
+}
 
 .popup .show {
-visibility: visible;
+    visibility: visible;
 }
 
-.popup-title h5{
-color: #b967e6;
-font-weight: normal;
-background-color: #212022;
-padding: 15px;
-border-radius: 50px;
-width: 400px;
-position: absolute;
-top: 20%;
-left: 50%;
-transform: translate(-50%, -50%);
+.post-title h5 {
+    color: #b967e6;
+    font-weight: normal;
+    background-color: #212022;
+    padding: 15px;
+    border-radius: 50px;
+    width: 400px;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.homepage-wrapper{
+.post-body {
+    border-style: none;
+    border-color: #b967e6;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 25px;
+    margin: 20px;
+    background-color: #232224;
+    border-radius: 10px;
+}
+
+.post-list {
+    width: 85%;
+    position: relative;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.favDialog {
+    background-color: #232224;
+    border-radius: 25px;
+    width: 400px;
+
+}
+
+.post-name {
+    color: #b967e6;
+}
+
+.post-textarea {
+    width: 380px;
+    height: 150px
+}
+
+/* .post-form{
     
+} */
+
+.submit-btn{
+    margin-left: 40%;
+}
+
+.esc{
+    margin-left: 38%;
+    color: #b967e6;
+}
+
+.homepage-wrapper {
+    margin-top: 0;
+}
+
+.post-p {
+    position: absolute;
+    margin-top: 150px;
+}
+
+.post-pic{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: 30px;
+}
+
+.post-content{
+    color: aliceblue;
+    font-weight: normal;
 }

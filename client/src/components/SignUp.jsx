@@ -6,6 +6,7 @@ function SignUp({updateUser}){
     const [signup, setSignup] = useState(null)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
 
     const navigate = useNavigate()
@@ -15,7 +16,7 @@ function SignUp({updateUser}){
         fetch('/api/signup', {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({username: username, password: password, email: email})
+            body: JSON.stringify({name: name, username: username, password: password, email: email})
         })
         .then(res => res.json())
         .then(data => {updateUser(data)
@@ -24,6 +25,10 @@ function SignUp({updateUser}){
 
     function handleUsername(e){
         setUsername(e.target.value)
+    }
+
+    function handleName(e){
+        setName(e.target.value)
     }
 
     function handleEmail(e){
@@ -45,6 +50,9 @@ function SignUp({updateUser}){
             <div className="signup-wrapper">
                 <div className="signup">
                     <form onSubmit={handleSubmit} className="signup-form">
+                    <div className='signup-title'>
+                            <input placeholder="Name" className='signup-input' type="text" value={name} onChange={handleName}/>
+                        </div>
                         <div className='signup-title'>
                             <input placeholder="Username" className='signup-input' type="text" value={username} onChange={handleUsername}/>
                         </div>
