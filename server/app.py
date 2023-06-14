@@ -20,11 +20,12 @@ class Users(Resource):
     def post(self):
 
         new_user = User(
-            username=request.form['username'],
-            password=request.form['password'],
-            email=request.form['email'],
-            profile_picture=request.form['profile_picture'],
-            bio=request.form['bio']
+            username=request.get_json()['username'],
+            password=request.get_json()['password'],
+            name=request.get_json()['name'],
+            email=request.get_json()['email'],
+            profile_picture=request.get_json()['profile_picture'],
+            bio=request.get_json()['bio']
         )
 
         db.session.add(new_user)
@@ -203,12 +204,14 @@ class FriendsByUsername(Resource):
 class SignUp(Resource):
     def post(self):
         data = request.get_json()
+        name=request.get_json()['name']
         username=data['username']
         password=data['password']
         email=data['email']
 
         if username and password:
             new_user = User(
+                name=name,
                 username=username,
                 email=email,
             )

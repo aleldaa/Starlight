@@ -117,6 +117,8 @@ class Friend(db.Model, SerializerMixin):
 class Interest(db.Model, SerializerMixin):
     __tablename__ = 'interests'
 
+    serialize_rules = ('-user',)
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
 
@@ -124,6 +126,8 @@ class Interest(db.Model, SerializerMixin):
 
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
+
+    serialize_rules = ('-post', '-user')
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String, nullable=False)
@@ -136,6 +140,8 @@ class Comment(db.Model, SerializerMixin):
 class Like(db.Model, SerializerMixin):
     __tablename__ = 'likes'
 
+    serialize_rules = ('-user', '-post')
+
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -146,6 +152,8 @@ class Like(db.Model, SerializerMixin):
 
 class Song(db.Model, SerializerMixin):
     __tablename__ = 'songs'
+
+    serialize_rules = ('-user',) 
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
