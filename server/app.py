@@ -116,7 +116,6 @@ class Posts(Resource):
         print(data)
         new_post = Post(
             content=data['content'],
-            title=data['title'],
             user_id=data['user_id']
         )
         db.session.add(new_post)

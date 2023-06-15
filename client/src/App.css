@@ -195,6 +195,18 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.post-title2 h5 {
+    color: #b967e6;
+    font-weight: normal;
+    background-color: #212022;
+    padding: 15px;
+    border-radius: 50px;
+    width: 400px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .post-body {
     border-style: none;
     border-color: #b967e6;
@@ -214,7 +226,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.favDialog {
+.favDialog{
     background-color: #232224;
     border-radius: 25px;
     width: 400px;
@@ -230,12 +242,13 @@ body {
     height: 150px
 }
 
-/* .post-form{
-    
-} */
-
 .submit-btn{
-    margin-left: 40%;
+    margin-left: 38.5%;
+    background-color: #b967e6;
+    color: aliceblue;
+    border-radius: 5px;
+    height: 40px;
+    width: 70px;
 }
 
 .esc{
@@ -265,14 +278,95 @@ body {
     font-weight: normal;
 }
 
-/* .file-btn {
-    position: relative;
-    overflow: hidden;
-  }
-  .file-input {
-    position: absolute;
-    font-size: 50px;
-    opacity: 0;
-    right: 0;
-    top: 0;
-  } */
+.profile-pic{
+    border-radius: 50%;
+    width: 80%;
+    height:80%;
+}
+
+.profile-pic-wrapper{
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #232224;
+    margin-top: -35px;
+    margin-left: 10px;
+}
+
+.button-img{
+    width: 20px;
+}
+
+.upload-button{
+    background-color: #232224;
+    margin-top: 87px;
+}
+
+.upload-btn-wrapper{
+
+}
+
+.banner{
+    width: 100%;
+}
+
+.profile-name{
+    color: #b967e6;
+    font-weight: normal;
+    margin-left: 30px;
+}
+
+.profile-page{
+    
+}
+
+.name-pic{
+    display: flex;
+}
+
+.user-post-pic-wrap{
+    border-color:#b967e6;
+}
+
+.cancel-btn{
+    width: 15px;
+}
+
+.cancel-btn-wrap{
+    background-color: #232224;
+}
+
+.friend-pic{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: 25px;
+    margin-left: 15px;
+}
+
+.friend-name{
+    color: #b967e6;
+}
+
+.friend-username{
+    color: aliceblue;
+    margin-left: 15px;
+}
+
+.friend{
+    display: flex;
+    background-color: #232224;
+    margin: 10px;
+    width: 297px;
+    height: 150px;
+    border-radius: 20px;
+}
+
+.friends-list{
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -22,6 +22,7 @@ function App() {
   const [page, setPage] = useState('/')
   const [users, setUsers] = useState(null)
   const [posts, setPosts] = useState([])
+  const [friends, setFriends] = useState([])
   // const [artist, setArtist] = useState([])
 
   const updateUser = (user) => setUsers(user)
@@ -54,6 +55,12 @@ function App() {
   // }, [])
 
   useEffect(()=>{
+    fetch('/api/users')
+      .then(res=>res.json())
+      .then(data=>setFriends(data))
+  }, [])
+
+  useEffect(()=>{
     fetch('/api/posts')
       .then(res=>res.json())
       .then(data=>setPosts(data))
@@ -82,8 +89,8 @@ function App() {
         <Route path="/logout" element={<Logout setUsers={setUsers} />} />
         <Route path='/home' element={<HomePage users={users} posts={posts} setPosts={setPosts}/>} />
         <Route path='/messages' element={<Messages />} />
-        <Route path='/profile' element={<Profile users={users}/>} />
-        <Route path='/friends' element={<Friends />} />
+        <Route path='/profile' element={<Profile setPosts={setPosts} users={users} posts={posts}/>} />
+        <Route path='/friends' element={<Friends friends={friends} users={users}/>} />
         <Route path='/music' element={<Music />} />
       </Routes>
     </div>

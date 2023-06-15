@@ -14,8 +14,10 @@ function UploadWidget(){
         })
     }, [])
     return(
-        <div>
-            <button onClick={()=> widgetRef.current.open()}>Upload</button>
+        <div className="upload-btn-wrapper">
+            <button className="upload-button" onClick={()=> widgetRef.current.open()}>
+                <img className="button-img" src="/src/images/camera.png"/>
+            </button>
         </div>
     )
 }
