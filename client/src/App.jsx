@@ -3,6 +3,7 @@ import './App.css'
 import { Route } from 'react-router'
 import { Routes } from 'react-router-dom'
 
+
 import NavBar from './components/NavBar'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
@@ -81,7 +82,7 @@ function App() {
         <Route path="/logout" element={<Logout setUsers={setUsers} />} />
         <Route path='/home' element={<HomePage users={users} posts={posts} setPosts={setPosts}/>} />
         <Route path='/messages' element={<Messages />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='/profile' element={<Profile users={users}/>} />
         <Route path='/friends' element={<Friends />} />
         <Route path='/music' element={<Music />} />
       </Routes>

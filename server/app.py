@@ -3,8 +3,10 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, jsonify, make_response, session
+from flask import render_template, request, jsonify, make_response, session
 from flask_restful import Resource
+from werkzeug.utils import secure_filename
+
 
 # Local imports
 from config import app, db, api, bcrypt
