@@ -2,13 +2,15 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 import re
 from sqlalchemy.ext.hybrid import hybrid_property
+from datetime import datetime
 
 from config import db, bcrypt
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-posts.user', '-messages_sent.sender', '-messages_received.receiver', '-friends.user_friend', '-users.user_user', '-friends.user_user', '-users.user_friend')
+    serialize_rules = ('-posts.user', '-messages_sent.sender', '-messages_received.receiver', '-received_notifications', '-sent_notifications', '-friends.user_friend', '-users.user_user', '-friends.user_user', '-users.user_friend')
+
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -27,6 +29,12 @@ class User(db.Model, SerializerMixin):
     friends = db.relationship('Friend', backref='user_friend', foreign_keys='Friend.user_id')
     users = db.relationship('Friend', backref='user_user', foreign_keys='Friend.friend_id')
     interests = db.relationship('Interest', backref='user', lazy=True)
+    received_notifications = db.relationship('Notification', back_populates='recipient', foreign_keys='Notification.recipient_id')
+    sent_notifications = db.relationship('Notification', back_populates='sender', foreign_keys='Notification.sender_id')
+    friend_requests = db.relationship('FriendRequest', backref='friend_recipient', foreign_keys='FriendRequest.recipient_id')
+    received_friend_requests = db.relationship('FriendRequest', back_populates='recipient', foreign_keys='FriendRequest.recipient_id', viewonly=True)
+
+
 
     @validates('username')
     def validate_username(self, key, username):
@@ -71,6 +79,19 @@ class User(db.Model, SerializerMixin):
 
     def authenticate(self, password):
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
+
+class FriendRequest(db.Model, SerializerMixin):
+    __tablename__ = 'friend_requests'
+
+    serialize_rules = ('-sender', '-recipient')
+
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    status = db.Column(db.String, default='Pending')
+
+    sender = db.relationship('User', foreign_keys=[sender_id], backref='sent_friend_requests')
+    recipient = db.relationship('User', back_populates='received_friend_requests', foreign_keys=[recipient_id], viewonly=True)
 
 class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
@@ -161,3 +182,18 @@ class Song(db.Model, SerializerMixin):
     album = db.Column(db.String)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+class Notification(db.Model, SerializerMixin):
+    __tablename__ = 'notifications'
+
+    serialize_rules = ('-recipient.sent_notifications', '-sender.received_notifications')
+
+    id = db.Column(db.Integer, primary_key=True)
+    recipient_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    message = db.Column(db.String)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.String, default='unread')
+
+    recipient = db.relationship('User', foreign_keys=[recipient_id], back_populates='received_notifications')
+    sender = db.relationship('User', foreign_keys=[sender_id], back_populates='sent_notifications')

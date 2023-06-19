@@ -1,8 +1,8 @@
-"""initial commit
+"""a
 
-Revision ID: a853d89c21f5
+Revision ID: 2e9865956d24
 Revises: 
-Create Date: 2023-06-12 20:19:06.414224
+Create Date: 2023-06-16 11:03:09.104116
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a853d89c21f5'
+revision = '2e9865956d24'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,6 +32,15 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
+    )
+    op.create_table('friend_requests',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('sender_id', sa.Integer(), nullable=True),
+    sa.Column('recipient_id', sa.Integer(), nullable=True),
+    sa.Column('status', sa.String(), nullable=True),
+    sa.ForeignKeyConstraint(['recipient_id'], ['users.id'], name=op.f('fk_friend_requests_recipient_id_users')),
+    sa.ForeignKeyConstraint(['sender_id'], ['users.id'], name=op.f('fk_friend_requests_sender_id_users')),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('friends',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -62,6 +71,17 @@ def upgrade():
     sa.Column('receiver_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['receiver_id'], ['users.id'], name=op.f('fk_messages_receiver_id_users')),
     sa.ForeignKeyConstraint(['sender_id'], ['users.id'], name=op.f('fk_messages_sender_id_users')),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('notifications',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('recipient_id', sa.Integer(), nullable=True),
+    sa.Column('sender_id', sa.Integer(), nullable=True),
+    sa.Column('message', sa.String(), nullable=True),
+    sa.Column('timestamp', sa.DateTime(), nullable=True),
+    sa.Column('status', sa.String(), nullable=True),
+    sa.ForeignKeyConstraint(['recipient_id'], ['users.id'], name=op.f('fk_notifications_recipient_id_users')),
+    sa.ForeignKeyConstraint(['sender_id'], ['users.id'], name=op.f('fk_notifications_sender_id_users')),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('posts',
@@ -116,8 +136,10 @@ def downgrade():
     op.drop_table('comments')
     op.drop_table('songs')
     op.drop_table('posts')
+    op.drop_table('notifications')
     op.drop_table('messages')
     op.drop_table('interests')
     op.drop_table('friends')
+    op.drop_table('friend_requests')
     op.drop_table('users')
     # ### end Alembic commands ###

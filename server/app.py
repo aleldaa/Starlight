@@ -4,13 +4,13 @@
 
 # Remote library imports
 from flask import render_template, request, jsonify, make_response, session
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 from werkzeug.utils import secure_filename
 
 
 # Local imports
 from config import app, db, api, bcrypt
-from models import User, Post, Message
+from models import User, Post, Message, Friend, Notification
 # Views go here!
 
 class Users(Resource):
@@ -190,17 +190,135 @@ class MessagesById(Resource):
         return make_response('', 204)
 
 class Friends(Resource):
-    def get(self):
-        friends = [friend.to_dict() for friend in Friend.query.all()]
-        return make_response(jsonify(friends), 200)
+    def get(self, user_id):
+        user = User.query.get(user_id)
+        if not user:
+            return {'error': 'User not found'}, 404
+
+        friends = user.friends
+        friend_list = [{'id': friend.friend_id, 'name': friend.user_friend.name, 'username': friend.user_friend.username} for friend in friends]
+        return make_response(jsonify(friend_list), 200)
+
+class FriendsById(Resource):
+    def patch(self, id):
+        data = request.get_json()
+        friend = Friend.query.filter_by(id=id).first()
+        for attr in data:
+            setattr(friend, attr, data[attr])
+        db.session.add(friend)
+        db.session.commit()
+        return make_response(jsonify(friend.to_dict()), 200)
 
 class FriendsByUsername(Resource):
     def get(self, username):
         try:
             friends = Friend.query.filter_by(username=username).first()
             return make_response(jsonify(friends.to_dict()), 200)
+            
         except:
             return make_response({'error': 'Friend not found'})
+
+class FriendRequest(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('sender_id', type=int, required=True)
+        parser.add_argument('recipient_id', type=int, required=True)
+        args = parser.parse_args()
+
+        sender = User.query.get(args['sender_id'])
+        recipient = User.query.get(args['recipient_id'])
+
+        if not sender or not recipient:
+            return make_response({'error': 'Invalid sender or recipient ID'}, 400)
+
+        if sender == recipient:
+            return make_response({'error': 'Cannot send friend request to yourself'}, 400)
+
+        existing_request = Friend.query.filter_by(user_id=args['sender_id'], friend_id=args['recipient_id']).first()
+        if existing_request:
+            return make_response({'error': 'Friend request already exists'}, 400)
+
+        friend_request = Friend(user_id=args['sender_id'], friend_id=args['recipient_id'], status='Pending')
+        db.session.add(friend_request)
+        db.session.commit()
+
+        notification = Notification(
+            recipient_id=args['recipient_id'],
+            sender_id=args['sender_id'],
+            message="You have received a friend request."
+        )
+        db.session.add(notification)
+        db.session.commit()
+
+        return make_response({'message': 'Friend request sent successfully'}, 201)
+
+    def put(self, friend_request_id):
+        data = request.get_json()
+        friend_request = FriendRequest.query.get(friend_request_id)
+        if not friend_request:
+            return {'error': 'Friend request not found'}, 404
+
+        action = data.get('action')
+        if action == 'accept':
+            friend_request.status = 'Accepted'
+            user = User.query.get(friend_request.recipient_id)
+            friend = User.query.get(friend_request.sender_id)
+            user.friends.append(friend)
+            friend.friends.append(user)
+
+            db.session.commit()
+            return {'message': 'Friend request accepted'}, 200
+        elif action == 'reject':
+            friend_request.status = 'Rejected'
+            db.session.commit()
+            return {'message': 'Friend request rejected'}, 200
+        else:
+            return {'error': 'Invalid action'}, 400
+
+    def get(self, user_id):
+        friend_requests = FriendRequest.query.filter_by(recipient_id=user_id, status='Pending').all()
+        request_list = [{'id': request.id, 'sender_id': request.sender_id, 'sender_name': request.sender.name} for request in friend_requests]
+        return make_response(jsonify(request_list), 200)
+
+class Notifications(Resource):
+    def get(self, id):
+        try:
+            notifications = Notification.query.filter_by(recipient_id=id).all()
+            notification_list = [notification.to_dict() for notification in notifications]
+            return make_response(jsonify(notification_list), 200)
+        except:
+            return make_response({'error': 'Notifications not found.'})
+
+# class MarkNotificationAsRead(Resource):
+#     def patch(self, notification_id):
+#         notification = Notification.query.get(notification_id)
+#         if not notification:
+#             return jsonify({'error': 'Notification not found'}), 404
+
+#         notification.status = 'read'
+#         db.session.commit()
+
+#         response = make_response(jsonify({
+#             'message': 'Notification marked as read',
+#             'notification': {
+#                 'id': notification.id,
+#                 'message': notification.message,
+#                 'status': notification.status,
+#             }
+#         }))
+#         response.status_code = 200
+
+#         return response
+
+class AcceptFriendRequest(Resource):
+    def post(self):
+        data = request.get_json()
+        new_friend = Notification(
+            status=data['status']
+        )
+        db.session.add(new_friend)
+        db.session.commit()
+        return make_response(jsonify(new_friend.to_dict()), 201)
 
 class SignUp(Resource):
     def post(self):
@@ -252,6 +370,9 @@ class Logout(Resource):
         session['user_id'] = None
         return {'message': '204: No Content'}, 204
 
+api.add_resource(AcceptFriendRequest, '/friend-requests/accept>')
+api.add_resource(FriendRequest, '/friend-request')
+api.add_resource(Notifications, '/notifications/<int:id>')
 api.add_resource(Users, '/users')
 api.add_resource(UsersById, '/users/<int:id>')
 api.add_resource(Posts, '/posts')
@@ -259,6 +380,7 @@ api.add_resource(PostsById, '/posts/<int:id>')
 api.add_resource(Messages, '/messages')
 api.add_resource(MessagesById, '/messages/<int:id>')
 api.add_resource(Friends, '/friends')
+api.add_resource(FriendsById, '/friends/<int:id>')
 api.add_resource(FriendsByUsername, '/friends/<string:username>')
 api.add_resource(SignUp, '/signup')
 api.add_resource(Login, '/login')

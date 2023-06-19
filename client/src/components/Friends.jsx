@@ -1,7 +1,7 @@
 import FriendsList from "./FriendsList";
 import { useState } from "react";
 
-function Friends({ friends }) {
+function Friends({ friends, users }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   function handleChange(e) {
@@ -14,7 +14,7 @@ function Friends({ friends }) {
   );
 
   const friendsList = filteredFriends.map((friend) => (
-    <FriendsList key={friend.id} friend={friend} />
+    <FriendsList key={friend.id} friend={friend} users={users} />
   ));
 
   return (
@@ -22,7 +22,7 @@ function Friends({ friends }) {
       <form className="searchbar">
         <input
           type="text"
-          id="search"
+          className="search"
           placeholder="Search..."
           value={searchQuery}
           onChange={handleChange}

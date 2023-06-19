@@ -15,6 +15,7 @@ import Messages from './components/Messages'
 import Profile from './components/Profile'
 import Friends from './components/Friends'
 import Music from './components/Music'
+import Notifications from './components/Notifications'
 
 
 function App() {
@@ -92,6 +93,7 @@ function App() {
         <Route path='/profile' element={<Profile setPosts={setPosts} users={users} posts={posts}/>} />
         <Route path='/friends' element={<Friends friends={friends} users={users}/>} />
         <Route path='/music' element={<Music />} />
+        <Route path='/notifications' element={<Notifications users={users}/>}/>
       </Routes>
     </div>
   )

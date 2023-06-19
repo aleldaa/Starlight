@@ -18,7 +18,6 @@ function Profile({ users, posts, setPosts }) {
             user={post.user}
         />;
     });
-    console.log(postList)
 
     const cld = new Cloudinary({
         cloud: {

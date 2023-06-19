@@ -3,7 +3,7 @@ from random import randint, choice
 from datetime import datetime, timedelta
 
 from config import app, db
-from models import User, Post, Message, Friend, Interest, Comment, Like
+from models import User, Post, Message, Friend, Interest, Comment, Like, Notification
 
 fake = Faker()
 
@@ -18,6 +18,16 @@ def generate_user():
     )
     user.password = fake.password()
     return user
+
+def generate_notification(sender, recipient):
+    notification = Notification(
+        sender=sender,
+        recipient=recipient,
+        message="You have a new friend request.",
+        timestamp=datetime.utcnow(),
+        status='unread'
+    )
+    return notification
 
 def generate_post(user):
     post = Post(
@@ -130,6 +140,14 @@ def generate_seed_data():
 
     db.session.commit()
 
+    for user in users:
+        for _ in range(randint(1, 5)):
+            sender = choice(users)
+            recipient = choice(users)
+            notification = generate_notification(sender, recipient)
+            db.session.add(notification)
+    db.session.commit()
+
 if __name__ == '__main__':
     with app.app_context():
         print("Starting seed...")
@@ -141,6 +159,7 @@ if __name__ == '__main__':
         Interest.query.delete()
         Like.query.delete()
         Comment.query.delete()
+        Notification.query.delete()
 
         generate_seed_data()
 
