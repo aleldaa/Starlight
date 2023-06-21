@@ -4,8 +4,9 @@ import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
 import { fill } from "@cloudinary/url-gen/actions/resize"
 import UserPosts from "./UserPosts";
+import ProfileFriends from "./ProfileFriends";
 
-function Profile({ users, posts, setPosts }) {
+function Profile({ users, posts, setPosts, friends }) {
 
     const [post, setPost] = useState({ title: "", content: "", user_id: users.id })
 
@@ -18,6 +19,16 @@ function Profile({ users, posts, setPosts }) {
             user={post.user}
         />;
     });
+console.log(users)
+
+    // const currentFriends = users.filter((user)=> user.friends == users.friends)
+    // const friendsList = users.map((user)=>{
+    //     console.log(user.users)
+    //     return <ProfileFriends
+    //         key={user.id}
+    //         friends={user}
+    //     />
+    // })
 
     const cld = new Cloudinary({
         cloud: {
@@ -25,7 +36,7 @@ function Profile({ users, posts, setPosts }) {
         }
     });
 
-    const profilePic = cld.image('v1686795150/lszig7lptnj0ct4y1lsh.jpg');
+    const profilePic = cld.image(users.profile_picture);
     const banner = cld.image('v1686842791/hxuugcccsxu9fqlrmj5r.jpg')
 
     profilePic.resize(fill().width(100).height(100));
@@ -66,7 +77,7 @@ function Profile({ users, posts, setPosts }) {
                 </div>
                 <div className="name-pic">
                     <div>
-                        <UploadWidget />
+                        <UploadWidget users={users}/>
                     </div>
                     <div className="profile-pic-wrapper">
                         <AdvancedImage className='profile-pic' cldImg={profilePic} />
@@ -95,7 +106,9 @@ function Profile({ users, posts, setPosts }) {
                         <h5>Anything on your mind?</h5>
                     </div>
                 </div>
-
+                <div>
+                    {/* {friendsList} */}
+                </div>
                 <div>{postList}
                 </div>
 

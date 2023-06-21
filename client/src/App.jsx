@@ -90,7 +90,7 @@ function App() {
         <Route path="/logout" element={<Logout setUsers={setUsers} />} />
         <Route path='/home' element={<HomePage users={users} posts={posts} setPosts={setPosts}/>} />
         <Route path='/messages' element={<Messages />} />
-        <Route path='/profile' element={<Profile setPosts={setPosts} users={users} posts={posts}/>} />
+        <Route path='/profile' element={<Profile setPosts={setPosts} users={users} posts={posts} friends={friends}/>} />
         <Route path='/friends' element={<Friends friends={friends} users={users}/>} />
         <Route path='/music' element={<Music />} />
         <Route path='/notifications' element={<Notifications users={users}/>}/>

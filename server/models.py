@@ -126,12 +126,13 @@ class Message(db.Model, SerializerMixin):
 class Friend(db.Model, SerializerMixin):
     __tablename__ = 'friends'
 
-    serialize_rules = ('-user_user.users', '-user_friend.friends', '-user_user.friends', '-user_friend.users')
+    serialize_rules = ('-notification_id', '-user_user.users', '-user_friend.friends', '-user_user.friends', '-user_friend.users')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     friend_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     status = db.Column(db.String, nullable=False)
+    notification_id = db.relationship('Notification', back_populates="friend")
 
     __table_args__ = (db.UniqueConstraint('user_id', 'friend_id'),)
 
@@ -186,14 +187,16 @@ class Song(db.Model, SerializerMixin):
 class Notification(db.Model, SerializerMixin):
     __tablename__ = 'notifications'
 
-    serialize_rules = ('-recipient.sent_notifications', '-sender.received_notifications')
+    serialize_rules = ('-friend', '-recipient.sent_notifications', '-sender.received_notifications')
 
     id = db.Column(db.Integer, primary_key=True)
     recipient_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    friendship_id = db.Column(db.Integer, db.ForeignKey('friends.id'))
     message = db.Column(db.String)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.String, default='unread')
 
     recipient = db.relationship('User', foreign_keys=[recipient_id], back_populates='received_notifications')
     sender = db.relationship('User', foreign_keys=[sender_id], back_populates='sent_notifications')
+    friend = db.relationship('Friend', foreign_keys=[friendship_id], back_populates='notification_id')

@@ -20,66 +20,37 @@ function Notifications({ users }) {
             });
     }, []);
 
-    // console.log(notifications);
-
-    // const markAsRead = (notificationId) => {
-    //     fetch(`/api/notifications/mark-read/${notificationId}`, {
-    //         method: 'PATCH',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ status: 'read' })
-    //     })
-    //         .then(response => {
-    //             if (response.ok) {
-    //                 setNotifications(prevNotifications => {
-    //                     return prevNotifications.map(notification => {
-    //                         if (notification.id === notificationId) {
-    //                             return { ...notification, status: 'read' };
-    //                         }
-    //                         return notification;
-    //                     });
-    //                 });
-    //             } else {
-    //                 console.error('Failed to mark notification as read');
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error('Failed to mark notification as read:', error);
-    //         });
-    // };
-
-    function acceptFriendRequest(id) {
-        fetch('/api/friend-requests/accept', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(request)
-        })
-            .then(res => res.json())
-            .then(data => {
-                setRequest(prevRequestData => [...prevRequestData, data])
-            })
-
-        fetch(`/api/friends/${id}`, {
+    function acceptFriendRequest(friend_id, id) {
+        console.log(friend_id)
+        fetch(`/api/friends/${friend_id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ status: 'accepted' })
         })
-            .then(res=>res.json())
-            .then(data=>console.log(data))
+            .then(res => res.json())
+            .then(data => setRequest(data))
+
+        // setNotifications(notifications.filter((notification) => notification.id !== id))
+        // fetch(`/api/notifications/${id}`, {
+        //     method: 'DELETE'
+        // })
     };
 
-
-return (
-    <div>
-        <h1>Notifications</h1>
-        {notifications.map(notification => (
-            <div key={notification.id}>
-                <h3>{notification.sender.name}</h3>
-                <p>{notification.message}</p>
-                <button onClick={acceptFriendRequest}>Accept Request</button>
-            </div>
-        ))}
-    </div>
-);
+    return (
+        <div>
+            <h1>Notifications</h1>
+            {notifications.map(notification => {
+                // console.log(notification)
+                return(
+                <div key={notification.id}>
+                    <p>{notification.id}</p>
+                    <h3>{notification.sender.name}</h3>
+                    <p>{notification.message}</p>
+                    <button onClick={() => acceptFriendRequest(notification.friendship_id, notification.id)}>Accept Request</button>
+                </div>
+            )})}
+        </div>
+    );
 }
 
 export default Notifications;

@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 
 # Local imports
 from config import app, db, api, bcrypt
-from models import User, Post, Message, Friend, Notification
+from models import User, Post, Message, Friend, Notification, FriendRequest
 # Views go here!
 
 class Users(Resource):
@@ -56,10 +56,12 @@ class UsersById(Resource):
         return response
 
     def patch(self, id):
-
+        
         user = User.query.filter_by(id=id).first()
-        for attr in request.form:
-            setattr(user, attr, request.form[attr])
+        print(user)
+        for attr in request.get_json():
+            print(attr)
+            setattr(user, attr, request.get_json()[attr])
 
         db.session.add(user)
         db.session.commit()
@@ -201,13 +203,24 @@ class Friends(Resource):
 
 class FriendsById(Resource):
     def patch(self, id):
-        data = request.get_json()
-        friend = Friend.query.filter_by(id=id).first()
-        for attr in data:
-            setattr(friend, attr, data[attr])
-        db.session.add(friend)
+        friend = Friend.query.filter(Friend.id == id).first()
+        print(friend)
+        if not friend:
+            return jsonify({'error': 'Friend not found'}), 404
+
+        friend.status = 'accepted'
         db.session.commit()
-        return make_response(jsonify(friend.to_dict()), 200)
+        
+        return make_response(jsonify({
+            'message': 'Friend accepted',
+            'friend': {
+                'id': friend.id,
+                'status': friend.status,
+            }
+        }), 200)
+        # response.status_code = 200
+
+        # return response
 
 class FriendsByUsername(Resource):
     def get(self, username):
@@ -245,7 +258,8 @@ class FriendRequest(Resource):
         notification = Notification(
             recipient_id=args['recipient_id'],
             sender_id=args['sender_id'],
-            message="You have received a friend request."
+            message="You have received a friend request.",
+            friendship_id=friend_request.id
         )
         db.session.add(notification)
         db.session.commit()
@@ -289,36 +303,13 @@ class Notifications(Resource):
         except:
             return make_response({'error': 'Notifications not found.'})
 
-# class MarkNotificationAsRead(Resource):
-#     def patch(self, notification_id):
-#         notification = Notification.query.get(notification_id)
-#         if not notification:
-#             return jsonify({'error': 'Notification not found'}), 404
-
-#         notification.status = 'read'
-#         db.session.commit()
-
-#         response = make_response(jsonify({
-#             'message': 'Notification marked as read',
-#             'notification': {
-#                 'id': notification.id,
-#                 'message': notification.message,
-#                 'status': notification.status,
-#             }
-#         }))
-#         response.status_code = 200
-
-#         return response
-
-class AcceptFriendRequest(Resource):
-    def post(self):
-        data = request.get_json()
-        new_friend = Notification(
-            status=data['status']
-        )
-        db.session.add(new_friend)
+    def delete(self, id):
+        notification = Notification.query.filter_by(id=id).first()
+        if notification == None:
+            return({'error': '404: Not Found.'})
+        db.session.delete(notification)
         db.session.commit()
-        return make_response(jsonify(new_friend.to_dict()), 201)
+        return make_response('', 204)
 
 class SignUp(Resource):
     def post(self):
@@ -370,7 +361,6 @@ class Logout(Resource):
         session['user_id'] = None
         return {'message': '204: No Content'}, 204
 
-api.add_resource(AcceptFriendRequest, '/friend-requests/accept>')
 api.add_resource(FriendRequest, '/friend-request')
 api.add_resource(Notifications, '/notifications/<int:id>')
 api.add_resource(Users, '/users')

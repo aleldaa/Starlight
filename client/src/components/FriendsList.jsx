@@ -1,4 +1,6 @@
 function FriendsList({ friend, users }) {
+
+
     function handleClick() {
       const request = {
         sender_id: users.id,
