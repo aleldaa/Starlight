@@ -54,7 +54,7 @@ function App() {
   //   .then(res=>res.json())
   //   .then(data => setArtist([data]))
   // }, [])
-
+  
   useEffect(()=>{
     fetch('/api/users')
       .then(res=>res.json())

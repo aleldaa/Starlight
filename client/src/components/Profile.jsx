@@ -1,14 +1,19 @@
 import { useState, useEffect, useRef } from "react"
 import UploadWidget from "./UploadWidget"
+import UploadWidget2 from "./UploadWidget2"
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
 import { fill } from "@cloudinary/url-gen/actions/resize"
 import UserPosts from "./UserPosts";
-import ProfileFriends from "./ProfileFriends";
+import { thumbnail } from "@cloudinary/url-gen/actions/resize";
+import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
+import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
+import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 
-function Profile({ users, posts, setPosts, friends }) {
+function Profile({ users, posts, setPosts }) {
 
     const [post, setPost] = useState({ title: "", content: "", user_id: users.id })
+    const [friends, setFriends] = useState({ user_friend: '' })
 
     const reversedPosts = posts ? Array.from(posts).reverse() : [];
     const currentUserPosts = reversedPosts.filter((post) => post.user_id === users.id);
@@ -19,16 +24,18 @@ function Profile({ users, posts, setPosts, friends }) {
             user={post.user}
         />;
     });
-    console.log(users)
+    console.log(friends.user_friend)
 
-    // const currentFriends = users.filter((user)=> user.friends == users.friends)
-    // const friendsList = users.map((user)=>{
-    //     console.log(user.users)
-    //     return <ProfileFriends
-    //         key={user.id}
-    //         friends={user}
-    //     />
-    // })
+    useEffect(() => {
+        fetch(`/api/friends/${users.users[0].id}`)
+            .then(res => res.json())
+            .then(data => {
+                setFriends(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }, []);
 
     const cld = new Cloudinary({
         cloud: {
@@ -37,10 +44,12 @@ function Profile({ users, posts, setPosts, friends }) {
     });
 
     const profilePic = cld.image(users.profile_picture);
+    const friendPic = cld.image(friends.user_friend.profile_picture)
     const banner = cld.image('v1686842791/hxuugcccsxu9fqlrmj5r.jpg')
 
-    profilePic.resize(fill().width(100).height(100));
-    banner.resize(fill().width(468).height(100));
+    profilePic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
+    friendPic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
+    banner.resize(fill().width(900).height(300))
 
     const dialogRef = useRef(null);
 
@@ -73,7 +82,13 @@ function Profile({ users, posts, setPosts, friends }) {
         <div>
             <div className="profile-page">
                 <div className="banner-wrapper">
-                    <AdvancedImage className='banner' cldImg={banner} />
+                    <div>
+
+                    </div>
+                    <div className="banner-div">
+                        <AdvancedImage className='banner' cldImg={banner} />
+                        <UploadWidget2 users={users} />
+                    </div>
                 </div>
                 <div className="name-pic">
                     <div>
@@ -85,9 +100,9 @@ function Profile({ users, posts, setPosts, friends }) {
                             currentTarget.src = '/src/images/profile-pic-default.png';
                         }} />
                     </div>
-                    <div className="profile-name-wrapper">
-                        <h1 className="profile-name">{users.name}</h1>
-                    </div>
+                </div>
+                <div className="profile-name-wrapper">
+                    <h1 className="profile-name">{users.name}</h1>
                 </div>
                 <dialog ref={dialogRef} className="favDialog">
                     <button className='cancel-btn-wrap' onClick={onClose}>
@@ -110,11 +125,21 @@ function Profile({ users, posts, setPosts, friends }) {
                     </div>
                 </div>
                 <div>
-                    {/* {friendsList} */}
+                    <div>
+                        <AdvancedImage
+                            onError={({ currentTarget }) => {
+                                currentTarget.onerror = null;
+                                currentTarget.src = '/src/images/profile-pic-default.png';
+                            }}
+                            className='post-pic'
+                            cldImg={friendPic}
+                        />
+                        <h3>{friends?.user_friend.name}</h3>
+                    </div>
                 </div>
-                <div>{postList}
+                <div>
+                    {postList}
                 </div>
-
             </div>
         </div>
     )

@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 
 # Local imports
 from config import app, db, api, bcrypt
-from models import User, Post, Message, Friend, Notification, FriendRequest
+from models import User, Post, Message, Friend, Notification
 # Views go here!
 
 class Users(Resource):
@@ -192,16 +192,18 @@ class MessagesById(Resource):
         return make_response('', 204)
 
 class Friends(Resource):
-    def get(self, user_id):
-        user = User.query.get(user_id)
-        if not user:
-            return {'error': 'User not found'}, 404
-
-        friends = user.friends
-        friend_list = [{'id': friend.friend_id, 'name': friend.user_friend.name, 'username': friend.user_friend.username} for friend in friends]
-        return make_response(jsonify(friend_list), 200)
+    def get(self):
+        friends = [friend.to_dict() for friend in Friend.query.all()]
+        return make_response(jsonify(friends), 200)
 
 class FriendsById(Resource):
+    def get(self, id):
+        try:
+            friend = Friend.query.filter_by(id=id).first()
+            return make_response(jsonify(friend.to_dict()), 200)
+        except:
+            return make_response({'error': 'Friend not found.'})
+
     def patch(self, id):
         friend = Friend.query.filter(Friend.id == id).first()
         print(friend)

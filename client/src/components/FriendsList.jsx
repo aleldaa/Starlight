@@ -1,6 +1,10 @@
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
 import { fill } from "@cloudinary/url-gen/actions/resize"
+import {thumbnail} from "@cloudinary/url-gen/actions/resize";
+import {byRadius} from "@cloudinary/url-gen/actions/roundCorners";
+import {focusOn} from "@cloudinary/url-gen/qualifiers/gravity";
+import {FocusOn} from "@cloudinary/url-gen/qualifiers/focusOn";
 
 function FriendsList({ friend, users }) {
 
@@ -35,8 +39,7 @@ function FriendsList({ friend, users }) {
 
   const profilePic = cld.image(friend.profile_picture);
 
-  profilePic.resize(fill().width(100).height(100));
-
+  profilePic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
 
   return (
     <div className="friend-wrap">

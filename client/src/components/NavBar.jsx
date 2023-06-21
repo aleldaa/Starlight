@@ -29,15 +29,15 @@ function NavBar({setUsers}){
                             <NavLink to='/profile' className='navLink'>
                                 <img className="profile-icon" src="/src/images/profile.png"/>
                             </NavLink>
-                            <NavLink to='/messages' className='navLink'>
+                            {/* <NavLink to='/messages' className='navLink'>
                                 <img className="message-icon" src="/src/images/chat.png"/>
-                            </NavLink>
+                            </NavLink> */}
                             <NavLink to='/friends' className='navLink'>
                                 <img className="friends-icon" src="/src/images/learning.png"/>
                             </NavLink>
-                            <NavLink to='/music' className='navLink'>
+                            {/* <NavLink to='/music' className='navLink'>
                                 <img className="music-icon" src='/src/images/music.png'/>
-                            </NavLink>
+                            </NavLink> */}
                             <NavLink to='/notifications' className='navLink'>
                                 <img className="notif-icon" src="/src/images/bell.png"/>
                             </NavLink>

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 
-function UploadWidget({users}){
+function UploadWidget2({users}){
 
     const cloudinaryRef = useRef()
     const widgetRef = useRef()
@@ -25,12 +25,12 @@ function UploadWidget({users}){
     }, [])
 
     return(
-        <div className="upload-btn-wrapper">
-            <button className="upload-button" onClick={()=> widgetRef.current.open()}>
-                <img className="button-img" src="/src/images/camera.png"/>
+        <div className="upload-btn-wrapper2">
+            <button className="upload-button2" onClick={()=> widgetRef.current.open()}>
+                <img className="button-img2" src="/src/images/camera.png"/>
             </button>
         </div>
     )
 }
 
-export default UploadWidget
+export default UploadWidget2

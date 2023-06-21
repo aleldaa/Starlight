@@ -179,6 +179,7 @@ body {
         padding: 20px;
         /* Adjust the padding to your desired spacing */
     }
+
 }
 
 .popup .show {
@@ -289,42 +290,72 @@ body {
     height:80%;
 }
 
+.banner{
+    display: flex;
+    border-radius: 10px;
+    max-width: 100%;
+    height: auto;
+    width: auto\9;
+}
+
+.banner-wrapper{
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
 .profile-pic-wrapper{
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
     background-color: #232224;
-    margin-top: -35px;
-    margin-left: 30px;
+    margin-top: -100px;
+    /* margin-left: 30px; */
 }
 
 .button-img{
     width: 20px;
 }
 
-.upload-button{
-    background-color: #232224;
-    margin-top: 87px;
-    border-radius: 50%;
-    position: absolute;
-    margin-left: 140px;
+.button-img2{
+    width: 20px;
 }
 
-.banner{
-    width: 100%;
+.upload-button{
+    background-color: #232224;
+    margin-top: 70px;
+    border-radius: 50%;
+    position: absolute;
+    margin-left: 150px;
+}
+
+.upload-button2{
+    background-color: #232224;
+    border-radius: 50%;
+    position: absolute;
+    margin-top: -35px;
+    margin-left: 5px;
+}
+
+.profile-name-wrapper{
+    display: flex;
+    justify-content: center;
 }
 
 .profile-name{
     color: #b967e6;
     font-weight: normal;
-    margin-left: 30px;
 }
 
 .name-pic{
     display: flex;
+    justify-content: center;
 }
 
 .user-post-pic-wrap{
