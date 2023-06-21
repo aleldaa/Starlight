@@ -220,6 +220,7 @@ body {
     margin: 20px;
     background-color: #232224;
     border-radius: 10px;
+    box-shadow: 1px 1px 1px 3px black;
 }
 
 .post-list {
@@ -389,4 +390,43 @@ body {
     border-radius: 10px;
     margin-top: 100px;
     margin-left: 15px;
+}
+
+.notif-wrapper{
+    background-color: #232224;
+    border-radius: 25px;
+    width: 400px;
+    box-shadow: 1px 1px 1px 3px black;
+    height: 150px;
+}
+
+.notif-name{
+    color: #b967e6;
+    text-align: center;
+}
+
+.notif-msg{
+    color: aliceblue;
+    text-align: center;
+}
+
+.notif-btn{
+    background-color: #232224;
+    color: #b967e6;
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+    position: relative;
+    left: 150px;
+}
+
+.notif-page h1{
+    display: flex;
+    justify-content: center;
+    color: #b967e6;
+}
+
+.notif-wrapper-wrapper{
+    display: flex;
+    justify-content: center;
 }

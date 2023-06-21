@@ -19,7 +19,7 @@ function Profile({ users, posts, setPosts, friends }) {
             user={post.user}
         />;
     });
-console.log(users)
+    console.log(users)
 
     // const currentFriends = users.filter((user)=> user.friends == users.friends)
     // const friendsList = users.map((user)=>{
@@ -77,10 +77,13 @@ console.log(users)
                 </div>
                 <div className="name-pic">
                     <div>
-                        <UploadWidget users={users}/>
+                        <UploadWidget users={users} />
                     </div>
                     <div className="profile-pic-wrapper">
-                        <AdvancedImage className='profile-pic' cldImg={profilePic} />
+                        <AdvancedImage className='profile-pic' cldImg={profilePic} onError={({ currentTarget }) => {
+                            currentTarget.onerror = null;
+                            currentTarget.src = '/src/images/profile-pic-default.png';
+                        }} />
                     </div>
                     <div className="profile-name-wrapper">
                         <h1 className="profile-name">{users.name}</h1>

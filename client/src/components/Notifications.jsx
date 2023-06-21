@@ -30,25 +30,26 @@ function Notifications({ users }) {
             .then(res => res.json())
             .then(data => setRequest(data))
 
-        // setNotifications(notifications.filter((notification) => notification.id !== id))
-        // fetch(`/api/notifications/${id}`, {
-        //     method: 'DELETE'
-        // })
+        setNotifications(notifications.filter((notification) => notification.id !== id))
+        fetch(`/api/notifications/${id}`, {
+            method: 'DELETE'
+        })
     };
 
     return (
-        <div>
+        <div className='notif-page'>
             <h1>Notifications</h1>
             {notifications.map(notification => {
-                // console.log(notification)
-                return(
-                <div key={notification.id}>
-                    <p>{notification.id}</p>
-                    <h3>{notification.sender.name}</h3>
-                    <p>{notification.message}</p>
-                    <button onClick={() => acceptFriendRequest(notification.friendship_id, notification.id)}>Accept Request</button>
-                </div>
-            )})}
+                return (
+                    <div className='notif-wrapper-wrapper'>
+                        <div className='notif-wrapper' key={notification.id}>
+                            <p className='notif-msg'>{notification.message}</p>
+                            <h3 className='notif-name'>{notification.sender.name}</h3>
+                            <button className='notif-btn' onClick={() => acceptFriendRequest(notification.friendship_id, notification.id)}>Accept</button>
+                        </div>
+                    </div>
+                )
+            })}
         </div>
     );
 }

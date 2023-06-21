@@ -84,7 +84,7 @@ def generate_seed_data():
     db.create_all()
 
     users = []
-    for _ in range(10):
+    for _ in range(3):
         user = generate_user()
         users.append(user)
 

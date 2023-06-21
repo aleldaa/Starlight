@@ -26,17 +26,6 @@ console.log(users)
         })
     }, [])
 
-    function saveToDb(){
-        // fetch('/')
-        fetch('/api/users', {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({profile_picture: profile_picture})
-        })
-        .then(res=>res.json())
-        .then(data=>console.log(data))
-    }
-
     return(
         <div className="upload-btn-wrapper">
             <button className="upload-button" onClick={()=> widgetRef.current.open()}>

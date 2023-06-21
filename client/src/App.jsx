@@ -93,7 +93,7 @@ function App() {
         <Route path='/profile' element={<Profile setPosts={setPosts} users={users} posts={posts} friends={friends}/>} />
         <Route path='/friends' element={<Friends friends={friends} users={users}/>} />
         <Route path='/music' element={<Music />} />
-        <Route path='/notifications' element={<Notifications users={users}/>}/>
+        <Route path='/notifications' element={<Notifications friends={friends} users={users}/>}/>
       </Routes>
     </div>
   )
