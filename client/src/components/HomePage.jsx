@@ -60,15 +60,16 @@ function HomePage({ posts, users, setPosts }) {
                             Submit
                         </button>
                     </form>
-                    <h5 className='esc'>(Esc to exit)</h5>
                 </dialog>
-                <div className='post-title-wrapper'>
-                    <div className="post-title" onClick={handleShowDialog}>
-                        <h5>What fuels your ✨sparkle✨ today?</h5>
+                <div className='post-title-list'>
+                    <div className='post-title-wrapper'>
+                        <div className="post-title" onClick={handleShowDialog}>
+                            <h5>What fuels your ✨sparkle✨ today?</h5>
+                        </div>
                     </div>
-                </div>
-                <div className='post-list'>
-                    <p className='post-p'>{postList}</p>
+                    <div className='post-list'>
+                        <p className='post-p' >{postList}</p>
+                    </div>
                 </div>
             </div>
         </div>

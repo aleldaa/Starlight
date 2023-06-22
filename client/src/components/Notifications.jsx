@@ -38,20 +38,26 @@ function Notifications({ users }) {
 
     return (
         <div className='notif-page'>
-            <h1>Notifications</h1>
-            {notifications.map(notification => {
-                return (
-                    <div className='notif-wrapper-wrapper'>
-                        <div className='notif-wrapper' key={notification.id}>
-                            <p className='notif-msg'>{notification.message}</p>
-                            <h3 className='notif-name'>{notification.sender.name}</h3>
-                            <button className='notif-btn' onClick={() => acceptFriendRequest(notification.friendship_id, notification.id)}>Accept</button>
-                        </div>
-                    </div>
-                )
-            })}
+          {notifications.length === 0 ? (
+            <h3 className='no-notifs'>You have no notifications</h3>
+          ) : (
+            notifications.map(notification => (
+              <div className='notif-wrapper-wrapper' key={notification.id}>
+                <div className='notif-wrapper'>
+                  <p className='notif-msg'>{notification.message}</p>
+                  <h3 className='notif-name'>{notification.sender.name}</h3>
+                  <button
+                    className='notif-btn'
+                    onClick={() => acceptFriendRequest(notification.friendship_id, notification.id)}
+                  >
+                    Accept
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
-    );
+      );
 }
 
 export default Notifications;

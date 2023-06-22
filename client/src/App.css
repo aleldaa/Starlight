@@ -2,6 +2,11 @@ body {
     margin: 0;
 }
 
+nav {
+    position: sticky; top: 0;
+    z-index: 1;
+}
+
 .main-title {
     background-color: #212022;
 }
@@ -193,8 +198,8 @@ body {
     padding: 15px;
     border-radius: 50px;
     width: 400px;
-    position: absolute;
-    top: 20%;
+    position: relative;
+    margin-top: 100px;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -224,12 +229,22 @@ body {
     box-shadow: 1px 1px 1px 3px black;
 }
 
+
 .post-list {
     width: 85%;
     position: relative;
     top: 0;
     left: 50%;
     transform: translate(-50%, -50%);
+    /* overflow: auto; */
+}
+
+.post-list2{
+    width: 71%;
+    position: relative;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0%);
 }
 
 .favDialog{
@@ -262,13 +277,9 @@ body {
     color: #b967e6;
 }
 
-.homepage-wrapper {
-    margin-top: 0;
-}
-
 .post-p {
-    position: absolute;
-    margin-top: 150px;
+    margin-top: 1100px;
+    overflow: auto;
 }
 
 .post-pic{
@@ -364,11 +375,12 @@ body {
 }
 
 .cancel-btn{
-    width: 15px;
+    width: 10px
 }
 
 .cancel-btn-wrap{
-    background-color: #232224;
+    background-color: transparent;
+    border-radius: 5px;
 }
 
 .friend-pic{
@@ -468,4 +480,52 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 20px;
+}
+
+.profile-friend-pic{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-friend-pic-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.friend-title{
+    color: #b967e6;
+    font-weight: normal;
+    margin: 20px;
+}
+
+/* .friend-title-wrap{
+
+} */
+
+.friends-on-profile{
+    background-color: #232224;
+    border-radius: 20px;
+    width: 40%;
+
+}
+
+.friends-on-profile-wrap{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px
+}
+
+.no-notifs{
+    color: #b967e6;
+    font-weight: normal;
+    display: flex;
+    justify-content: center;
 }

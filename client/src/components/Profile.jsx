@@ -27,11 +27,8 @@ function Profile({ users, posts, setPosts }) {
             user={post.user}
         />;
     });
-    console.log(users)
+
     useEffect(() => {
-        // if (!users.users[0]) {
-        //     return <div>No friends</div>;
-        //   }
         if (users.users.length !== 0) {
             fetch(`/api/friends/${users.users[0].id}`)
                 .then(res => res.json())
@@ -50,13 +47,9 @@ function Profile({ users, posts, setPosts }) {
         }
     });
 
-    // const profilePic = cld.image(users.profile_picture);
     const friendPic = cld.image(friends.user_friend.profile_picture)
-    // const banner = cld.image(users.banner_picture)
 
-    // profilePic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
     friendPic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
-    // banner.resize(fill().width(900).height(300))
 
     const dialogRef = useRef(null);
 
@@ -141,23 +134,27 @@ function Profile({ users, posts, setPosts }) {
                         <h5>Anything on your mind?</h5>
                     </div>
                 </div>
-                <div>
-                    <div>
+                <div className="friends-on-profile-wrap">
+                    <div className="friends-on-profile">
+                        <div className="friend-title-wrap">
+                            <h3 className="friend-title">Friends</h3>
+                        </div>
                         {users.users[0] ?
+                        <div className="profile-friend-pic-wrap">
                             <AdvancedImage
                                 onError={({ currentTarget }) => {
                                     currentTarget.onerror = null;
                                     currentTarget.src = '/src/images/profile-pic-default.png';
                                 }}
-                                className='post-pic'
+                                className='profile-friend-pic'
                                 cldImg={friendPic}
-                            /> :
+                            /> 
+                            </div> :
                             <div className="loser">Lmao loser go get some friends</div>
                             }
-                        <h3>{friends.user_friend.name}</h3>
                     </div>
                 </div>
-                <div>
+                <div className="post-list2">
                     {postList}
                 </div>
             </div>
