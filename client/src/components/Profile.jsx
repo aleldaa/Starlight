@@ -82,11 +82,15 @@ function Profile({ users, posts, setPosts }) {
         <div>
             <div className="profile-page">
                 <div className="banner-wrapper">
-                    <div>
-
-                    </div>
                     <div className="banner-div">
-                        <AdvancedImage className='banner' cldImg={banner} />
+                        <AdvancedImage 
+                            className='banner' 
+                            cldImg={banner}
+                            onError={({ currentTarget }) => {
+                                currentTarget.onerror = null;
+                                currentTarget.src = '/src/images/upload_default.jpg';
+                            }}
+                        />
                         <UploadWidget2 users={users} />
                     </div>
                 </div>

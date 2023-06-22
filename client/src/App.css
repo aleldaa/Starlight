@@ -296,6 +296,7 @@ body {
     max-width: 100%;
     height: auto;
     width: auto\9;
+    object-fit: fill;
 }
 
 .banner-wrapper{
