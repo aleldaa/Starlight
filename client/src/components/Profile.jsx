@@ -14,6 +14,9 @@ function Profile({ users, posts, setPosts }) {
 
     const [post, setPost] = useState({ title: "", content: "", user_id: users.id })
     const [friends, setFriends] = useState({ user_friend: '' })
+    const [bannerUrl, setBannerUrl] = useState(users.banner_picture);
+    const [profilePicUrl, setProfilePicUrl] = useState(users.profile_picture);
+
 
     const reversedPosts = posts ? Array.from(posts).reverse() : [];
     const currentUserPosts = reversedPosts.filter((post) => post.user_id === users.id);
@@ -47,13 +50,13 @@ function Profile({ users, posts, setPosts }) {
         }
     });
 
-    const profilePic = cld.image(users.profile_picture);
+    // const profilePic = cld.image(users.profile_picture);
     const friendPic = cld.image(friends.user_friend.profile_picture)
-    const banner = cld.image(users.banner_picture)
+    // const banner = cld.image(users.banner_picture)
 
-    profilePic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
+    // profilePic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
     friendPic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
-    banner.resize(fill().width(900).height(300))
+    // banner.resize(fill().width(900).height(300))
 
     const dialogRef = useRef(null);
 
@@ -96,19 +99,22 @@ function Profile({ users, posts, setPosts }) {
                                 currentTarget.src = '/src/images/upload_default.jpg';
                             }}
                             className='banner'
-                            cldImg={banner}
+                            cldImg={cld.image(bannerUrl).resize(fill().width(900).height(300))}
                         />
-                        <UploadWidget2 users={users} />
+                        <UploadWidget2 setBannerUrl={setBannerUrl} users={users} />
                     </div>
                 </div>
                 <div className="name-pic">
                     <div>
-                        <UploadWidget users={users} />
+                        <UploadWidget setProfilePicUrl={setProfilePicUrl} users={users} />
                     </div>
                     <div className="profile-pic-wrapper">
-                        <AdvancedImage className='profile-pic' cldImg={profilePic} onError={({ currentTarget }) => {
-                            currentTarget.onerror = null;
-                            currentTarget.src = '/src/images/profile-pic-default.png';
+                        <AdvancedImage 
+                            className='profile-pic' 
+                            cldImg={cld.image(profilePicUrl).resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())))} 
+                            onError={({ currentTarget }) => {
+                                currentTarget.onerror = null;
+                                currentTarget.src = '/src/images/profile-pic-default.png';
                         }} />
                     </div>
                 </div>
@@ -146,7 +152,8 @@ function Profile({ users, posts, setPosts }) {
                                 className='post-pic'
                                 cldImg={friendPic}
                             /> :
-                            <div className="loser">Lmao loser go get some friends</div>}
+                            <div className="loser">Lmao loser go get some friends</div>
+                            }
                         <h3>{friends.user_friend.name}</h3>
                     </div>
                 </div>
