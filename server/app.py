@@ -27,6 +27,7 @@ class Users(Resource):
             name=request.get_json()['name'],
             email=request.get_json()['email'],
             profile_picture=request.get_json()['profile_picture'],
+            banner_picture=request.get_json()['banner_picture'],
             bio=request.get_json()['bio']
         )
 
@@ -84,6 +85,7 @@ class UsersById(Resource):
             password=data['password'],
             email=data['email'],
             profile_picture=data['profile_picture'],
+            banner_picture=request.get_json()['banner_picture'],
             bio=data['bio']
         )
 

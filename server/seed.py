@@ -14,6 +14,7 @@ def generate_user():
         name=fake.name(),
         age=randint(18, 65),
         profile_picture=fake.image_url(),
+        banner_picture=fake.image_url(),
         bio=fake.text(),
     )
     user.password = fake.password()

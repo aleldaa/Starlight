@@ -3,7 +3,7 @@ import UploadWidget from "./UploadWidget"
 import UploadWidget2 from "./UploadWidget2"
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
-import { fill } from "@cloudinary/url-gen/actions/resize"
+import { fill, crop } from "@cloudinary/url-gen/actions/resize"
 import UserPosts from "./UserPosts";
 import { thumbnail } from "@cloudinary/url-gen/actions/resize";
 import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
@@ -24,18 +24,22 @@ function Profile({ users, posts, setPosts }) {
             user={post.user}
         />;
     });
-    console.log(friends.user_friend)
-
+    console.log(users)
     useEffect(() => {
-        fetch(`/api/friends/${users.users[0].id}`)
-            .then(res => res.json())
-            .then(data => {
-                setFriends(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }, []);
+        // if (!users.users[0]) {
+        //     return <div>No friends</div>;
+        //   }
+        if (users.users.length !== 0) {
+            fetch(`/api/friends/${users.users[0].id}`)
+                .then(res => res.json())
+                .then(data => {
+                    setFriends(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    }, [])
 
     const cld = new Cloudinary({
         cloud: {
@@ -45,7 +49,7 @@ function Profile({ users, posts, setPosts }) {
 
     const profilePic = cld.image(users.profile_picture);
     const friendPic = cld.image(friends.user_friend.profile_picture)
-    const banner = cld.image('v1686842791/hxuugcccsxu9fqlrmj5r.jpg')
+    const banner = cld.image(users.banner_picture)
 
     profilePic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
     friendPic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
@@ -82,14 +86,17 @@ function Profile({ users, posts, setPosts }) {
         <div>
             <div className="profile-page">
                 <div className="banner-wrapper">
+                    <div>
+
+                    </div>
                     <div className="banner-div">
-                        <AdvancedImage 
-                            className='banner' 
-                            cldImg={banner}
+                        <AdvancedImage
                             onError={({ currentTarget }) => {
                                 currentTarget.onerror = null;
                                 currentTarget.src = '/src/images/upload_default.jpg';
                             }}
+                            className='banner'
+                            cldImg={banner}
                         />
                         <UploadWidget2 users={users} />
                     </div>
@@ -130,15 +137,17 @@ function Profile({ users, posts, setPosts }) {
                 </div>
                 <div>
                     <div>
-                        <AdvancedImage
-                            onError={({ currentTarget }) => {
-                                currentTarget.onerror = null;
-                                currentTarget.src = '/src/images/profile-pic-default.png';
-                            }}
-                            className='post-pic'
-                            cldImg={friendPic}
-                        />
-                        <h3>{friends?.user_friend.name}</h3>
+                        {users.users[0] ?
+                            <AdvancedImage
+                                onError={({ currentTarget }) => {
+                                    currentTarget.onerror = null;
+                                    currentTarget.src = '/src/images/profile-pic-default.png';
+                                }}
+                                className='post-pic'
+                                cldImg={friendPic}
+                            /> :
+                            <div className="loser">Lmao loser go get some friends</div>}
+                        <h3>{friends.user_friend.name}</h3>
                     </div>
                 </div>
                 <div>

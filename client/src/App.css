@@ -295,7 +295,7 @@ body {
     border-radius: 10px;
     max-width: 100%;
     height: auto;
-    width: auto\9;
+    width: auto;
     object-fit: fill;
 }
 
@@ -461,4 +461,11 @@ body {
 .notif-wrapper-wrapper{
     display: flex;
     justify-content: center;
+}
+
+.loser{
+    color: #b967e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
