@@ -9,7 +9,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-sent_friend_requests', '-received_friend', '-friend_requests', '-received_friend_requests', '-posts.user', '-messages_sent.sender', '-messages_received.receiver', '-received_notifications', '-sent_notifications', '-friends.user_friend', '-users.user_user', '-friends.user_user', '-users.user_friend')
+    serialize_rules = ('-user.posts.comments','-comments.user', '-sent_friend_requests', '-received_friend', '-friend_requests', '-received_friend_requests', '-posts.user', '-messages_sent.sender', '-messages_received.receiver', '-received_notifications', '-sent_notifications',  '-posts.user')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -23,6 +23,7 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    comments = db.relationship('Comment', backref='user')
     posts = db.relationship('Post', backref='user')
     messages_sent = db.relationship('Message', backref='sender', foreign_keys='Message.sender_id')
     messages_received = db.relationship('Message', backref='receiver', foreign_keys='Message.receiver_id')
@@ -76,28 +77,14 @@ class User(db.Model, SerializerMixin):
     def authenticate(self, password):
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
-# class FriendRequest(db.Model, SerializerMixin):
-#     __tablename__ = 'friend_requests'
-
-#     serialize_rules = ('-sender', '-recipient')
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-#     recipient_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-#     status = db.Column(db.String, default='Pending')
-
-#     sender = db.relationship('User', foreign_keys=[sender_id], backref='sent_friend_requests')
-#     recipient = db.relationship('User', back_populates='received_friend_requests', foreign_keys=[recipient_id], viewonly=True)
-
 class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
 
-    serialize_rules = ('-user.posts',)
+    serialize_rules = ('-user.posts', '-comments')
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String)
     title = db.Column(db.String)
-    comments = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
@@ -122,7 +109,7 @@ class Message(db.Model, SerializerMixin):
 class Friend(db.Model, SerializerMixin):
     __tablename__ = 'friends'
 
-    serialize_rules = ('-sender', '-recipient','-notification_id', '-user_user.users', '-user_friend.friends', '-user_user.friends', '-user_friend.users')
+    serialize_rules = ('-notification_id', '-user_user.users', '-user_friend.friends', '-user_user.friends', '-user_friend.users')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -130,8 +117,8 @@ class Friend(db.Model, SerializerMixin):
     status = db.Column(db.String, nullable=False)
     notification_id = db.relationship('Notification', back_populates="friend")
 
-    sender = db.relationship('User', foreign_keys=[friend_id], backref='sent_friend_requests')
-    recipient = db.relationship('User', backref='received_friend', foreign_keys=[user_id], viewonly=True)
+    # sender = db.relationship('User', foreign_keys=[friend_id], backref='sent_friend_requests')
+    # recipient = db.relationship('User', backref='received_friend', foreign_keys=[user_id], viewonly=True)
 
     __table_args__ = (db.UniqueConstraint('user_id', 'friend_id'),)
 
@@ -148,13 +135,15 @@ class Interest(db.Model, SerializerMixin):
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
 
-    serialize_rules = ('-post', '-user')
+    serialize_rules = ('-post', '-user.comments')
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     
+    post = db.relationship('Post', backref='comments')
+
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 

@@ -6,9 +6,27 @@ import {thumbnail} from "@cloudinary/url-gen/actions/resize";
 import {byRadius} from "@cloudinary/url-gen/actions/roundCorners";
 import {focusOn} from "@cloudinary/url-gen/qualifiers/gravity";
 import {FocusOn} from "@cloudinary/url-gen/qualifiers/focusOn";
+import Comments from "./Comments";
+import { data } from "jquery";
 
-function Posts({ title, content, user, currentUser }) {
+function Posts({ id, content, user, currentUser, deletedPost }) {
   const [isCurrentUserPost, setIsCurrentUserPost] = useState(false);
+  const [comments, setComments] = useState([])
+
+  const commentsList = comments.map((comment)=>{
+    // console.log(comment)
+    return <Comments
+        key={comment.id}
+        content={comment.content}
+        user={comment.user}
+    />
+  })
+
+  useEffect(() => {
+    fetch('/api/comments')
+      .then(res=>res.json())
+      .then(data=>setComments(data))
+  }, [])
 
   useEffect(() => {
     setIsCurrentUserPost(currentUser && currentUser.id === user.id);
@@ -19,6 +37,15 @@ function Posts({ title, content, user, currentUser }) {
       cloudName: 'dakv6swek'
     }
   });
+
+  function handleDelete(id) {
+    console.log(id)
+    deletedPost(id)
+    fetch(`/api/posts/${id}`, {
+        method: 'DELETE'
+    })
+  }
+
 
   const profilePic = cld.image(user.profile_picture);
 
@@ -38,6 +65,18 @@ function Posts({ title, content, user, currentUser }) {
         </div>
         <h5 className="post-name">{user.name}</h5>
         <h4 className="post-content">{content}</h4>
+        {isCurrentUserPost && (
+        <div className="delete-btn-wrap">
+          <button onClick={()=>handleDelete(id)} className="delete-btn">
+            <img className="delete-btn-img" src="/src/images/delete.png"/>
+          </button>
+        </div>
+        )}
+      </div>
+      <div>
+        <div>
+          {commentsList}
+        </div>
       </div>
     </div>
   );

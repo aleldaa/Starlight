@@ -28,23 +28,23 @@ function App() {
 
   const updateUser = (user) => setUsers(user)
 
-  useEffect(() => {
-    const data = new URLSearchParams({
-      grant_type: "client_credentials",
-      client_id: "7952c26319fe4f2f8c158255b18509fc",
-      client_secret: "db769497eec94f00962753212668c77c"
-    });
-    fetch("https://accounts.spotify.com/api/token", {
-      method: 'POST',
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: data
-    })
-      .then(res => res.json())
-      .then(data => {
-        const access_token = data.access_token
-        console.log("Access Token:", access_token)
-      })
-  }, [])
+  // useEffect(() => {
+  //   const data = new URLSearchParams({
+  //     grant_type: "client_credentials",
+  //     client_id: "7952c26319fe4f2f8c158255b18509fc",
+  //     client_secret: "db769497eec94f00962753212668c77c"
+  //   });
+  //   fetch("https://accounts.spotify.com/api/token", {
+  //     method: 'POST',
+  //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  //     body: data
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       const access_token = data.access_token
+  //       console.log("Access Token:", access_token)
+  //     })
+  // }, [])
 
   // useEffect(()=>{
   //   fetch("https://api.spotify.com/search", {
@@ -54,6 +54,15 @@ function App() {
   //   .then(res=>res.json())
   //   .then(data => setArtist([data]))
   // }, [])
+
+  console.log(users)
+  // const notifFriends = friends
+  function deletedPost(newPost){
+    const allPosts = posts.filter(post => post.id !== newPost);
+    console.log(allPosts)
+    setPosts(allPosts)
+
+  }
   
   useEffect(()=>{
     fetch('/api/users')
@@ -73,6 +82,15 @@ function App() {
       .then(data => setUsers(data))
   }, [])
 
+  console.log(users)
+
+  const notifFriends = users?.friends.filter((friend)=> friend.user_id === users.id)
+  const friendsList = users?.friends.filter((friend) => friend.status === 'accepted')
+  const additionalAccepted = users?.users.filter((friend) => friend.status === 'accepted')
+  const allFriends = friendsList?.concat(additionalAccepted)
+  console.log(allFriends)
+  console.log(notifFriends)
+
   if (!users) return (
     <div className='body'>
       <NavBarInitial onChangePage={setPage} />
@@ -88,12 +106,12 @@ function App() {
       <NavBar setUsers={setUsers} onChangePage={setPage} />
       <Routes>
         <Route path="/logout" element={<Logout setUsers={setUsers} />} />
-        <Route path='/home' element={<HomePage users={users} posts={posts} setPosts={setPosts}/>} />
+        <Route path='/home' element={<HomePage deletedPost={deletedPost} users={users} posts={posts} setPosts={setPosts}/>} />
         <Route path='/messages' element={<Messages />} />
-        <Route path='/profile' element={<Profile setPosts={setPosts} users={users} posts={posts} friends={friends}/>} />
+        <Route path='/profile' element={<Profile friendsList={allFriends} setPosts={setPosts} users={users} posts={posts} friends={friends}/>} />
         <Route path='/friends' element={<Friends friends={friends} users={users}/>} />
         <Route path='/music' element={<Music />} />
-        <Route path='/notifications' element={<Notifications friends={friends} users={users}/>}/>
+        <Route path='/notifications' element={<Notifications notifFriends={notifFriends} friends={friends} users={users}/>}/>
       </Routes>
     </div>
   )

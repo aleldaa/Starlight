@@ -7,7 +7,7 @@ import {focusOn} from "@cloudinary/url-gen/qualifiers/gravity";
 import {FocusOn} from "@cloudinary/url-gen/qualifiers/focusOn";
 
 function FriendsList({ friend, users }) {
-
+console.log(users.id)
   function handleClick() {
     const request = {
       sender_id: users.id,

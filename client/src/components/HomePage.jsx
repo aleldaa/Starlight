@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Posts from './Posts';
 
-function HomePage({ posts, users, setPosts }) {
+function HomePage({ posts, users, setPosts, deletedPost }) {
 
     const [post, setPost] = useState({ content: "", user_id: users.id })
     const reversedPosts = posts ? Array.from(posts).reverse() : [];
@@ -9,6 +9,7 @@ function HomePage({ posts, users, setPosts }) {
     const dialogRef = useRef(null);
 
     const postList = reversedPosts?.map((post) => {
+        console.log(post)
         return <Posts
             key={post.id}
             title={post.title}
@@ -16,6 +17,8 @@ function HomePage({ posts, users, setPosts }) {
             user={post.user}
             currentUser={users}
             profilePic={users.profile_picture}
+            deletedPost={deletedPost}
+            id={post.id}
         />;
     });
 
@@ -62,10 +65,8 @@ function HomePage({ posts, users, setPosts }) {
                     </form>
                 </dialog>
                 <div className='post-title-list'>
-                    <div className='post-title-wrapper'>
-                        <div className="post-title" onClick={handleShowDialog}>
-                            <h5>What fuels your ✨sparkle✨ today?</h5>
-                        </div>
+                    <div className="post-title" onClick={handleShowDialog}>
+                        <h5>What fuels your ✨sparkle✨ today?</h5>
                     </div>
                     <div className='post-list'>
                         <p className='post-p' >{postList}</p>

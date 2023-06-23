@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 
 # Local imports
 from config import app, db, api, bcrypt
-from models import User, Post, Message, Friend, Notification
+from models import User, Post, Message, Friend, Notification, Comment
 # Views go here!
 
 class Users(Resource):
@@ -57,7 +57,6 @@ class UsersById(Resource):
         return response
 
     def patch(self, id):
-        
         user = User.query.filter_by(id=id).first()
         print(user)
         for attr in request.get_json():
@@ -150,6 +149,11 @@ class PostsById(Resource):
         db.session.delete(post)
         db.session.commit()
         return make_response('', 204)
+
+class Comments(Resource):
+    def get(self):
+        comments = [comment.to_dict() for comment in Comment.query.all()]
+        return make_response(jsonify(comments), 200)
 
 class Messages(Resource):
     def get(self):
@@ -371,6 +375,7 @@ api.add_resource(Users, '/users')
 api.add_resource(UsersById, '/users/<int:id>')
 api.add_resource(Posts, '/posts')
 api.add_resource(PostsById, '/posts/<int:id>')
+api.add_resource(Comments, '/comments')
 api.add_resource(Messages, '/messages')
 api.add_resource(MessagesById, '/messages/<int:id>')
 api.add_resource(Friends, '/friends')

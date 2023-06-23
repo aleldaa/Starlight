@@ -229,14 +229,14 @@ nav {
     box-shadow: 1px 1px 1px 3px black;
 }
 
+/* .post-title-list{
+    border-style: solid;
+    
+} */
 
 .post-list {
-    width: 85%;
-    position: relative;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* overflow: auto; */
+    display: flex;
+    justify-content: center;
 }
 
 .post-list2{
@@ -278,8 +278,8 @@ nav {
 }
 
 .post-p {
-    margin-top: 1100px;
-    overflow: auto;
+    position: relative;
+    width: 85%;
 }
 
 .post-pic{
@@ -442,6 +442,7 @@ nav {
     width: 400px;
     box-shadow: 1px 1px 1px 3px black;
     height: 150px;
+    margin-top: 30px;
 }
 
 .notif-name{
@@ -528,4 +529,18 @@ nav {
     font-weight: normal;
     display: flex;
     justify-content: center;
+}
+
+.delete-btn{
+    background-color: #232224;
+    border-radius: 20px;
+}
+
+.delete-btn-img{
+    width: 15px;
+}
+
+.delete-btn-wrap{
+    display: flex;
+    justify-content: end;
 }
