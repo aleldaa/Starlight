@@ -160,12 +160,21 @@ class Comments(Resource):
         new_comment = Comment(
             content=data['content'],
             post_id=data['post_id'],
-            user_id=['user_id'],
+            user_id=data['user_id'],
         )
         db.session.add(new_comment)
         db.session.commit()
 
         return make_response(jsonify(new_comment.to_dict()), 201)
+
+class CommentsById(Resource):
+    def delete(self, id):
+        comment = Comment.query.filter_by(id=id).first()
+        if comment == None:
+            return({'error': '404: Not Found.'})
+        db.session.delete(comment)
+        db.session.commit()
+        return make_response('', 204)
 
 class Messages(Resource):
     def get(self):
@@ -388,6 +397,7 @@ api.add_resource(UsersById, '/users/<int:id>')
 api.add_resource(Posts, '/posts')
 api.add_resource(PostsById, '/posts/<int:id>')
 api.add_resource(Comments, '/comments')
+api.add_resource(CommentsById, '/comments/<int:id>')
 api.add_resource(Messages, '/messages')
 api.add_resource(MessagesById, '/messages/<int:id>')
 api.add_resource(Friends, '/friends')

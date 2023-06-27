@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
-import { fill } from "@cloudinary/url-gen/actions/resize"
-import {thumbnail} from "@cloudinary/url-gen/actions/resize";
-import {byRadius} from "@cloudinary/url-gen/actions/roundCorners";
-import {focusOn} from "@cloudinary/url-gen/qualifiers/gravity";
-import {FocusOn} from "@cloudinary/url-gen/qualifiers/focusOn";
+import { thumbnail } from "@cloudinary/url-gen/actions/resize";
+import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
+import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 
-function UserPosts({ post, user, currentUser }) {
+function UserPosts({ id, deletedPost, post, user, currentUser }) {
     const [isCurrentUserPost, setIsCurrentUserPost] = useState(false);
     useEffect(() => {
         setIsCurrentUserPost(currentUser && currentUser.id === user.id);
@@ -23,6 +21,12 @@ function UserPosts({ post, user, currentUser }) {
 
     profilePic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
 
+    function handleDelete(id) {
+        deletedPost(id)
+        fetch(`/api/posts/${id}`, {
+          method: 'DELETE'
+        })
+      }
 
     return (
         <div>
@@ -39,6 +43,11 @@ function UserPosts({ post, user, currentUser }) {
                 </div>
                 <h2 className="post-name">{user.name}</h2>
                 <p className="post-content">{post.content}</p>
+                <div className="delete-btn-wrap">
+                    <button onClick={() => handleDelete(id)} className="delete-btn">
+                        <img className="delete-btn-img" src="/src/images/delete.png" />
+                    </button>
+                </div>
             </div>
         </div>
     )

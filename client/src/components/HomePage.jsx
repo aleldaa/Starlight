@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Posts from './Posts';
 
-function HomePage({ posts, users, setPosts, deletedPost }) {
+function HomePage({ posts, users, setPosts, deletedPost, deletedComment }) {
 
     const [post, setPost] = useState({ content: "", user_id: users.id })
     const reversedPosts = posts ? Array.from(posts).reverse() : [];
@@ -9,7 +9,7 @@ function HomePage({ posts, users, setPosts, deletedPost }) {
     const dialogRef = useRef(null);
 
     const postList = reversedPosts?.map((post) => {
-        console.log(post)
+
         return <Posts
             key={post.id}
             title={post.title}
@@ -17,6 +17,7 @@ function HomePage({ posts, users, setPosts, deletedPost }) {
             user={post.user}
             currentUser={users}
             profilePic={users.profile_picture}
+            deletedComment={deletedComment}
             deletedPost={deletedPost}
             id={post.id}
         />;
@@ -40,6 +41,7 @@ function HomePage({ posts, users, setPosts, deletedPost }) {
             .then(res => res.json())
             .then(data => {
                 setPosts(prevPostData => [...prevPostData, data])
+                setPost({ ...post, content: "" })
             })
     }
 
@@ -58,7 +60,7 @@ function HomePage({ posts, users, setPosts, deletedPost }) {
                         <h1>{users.name}</h1>
                     </div>
                     <form className='post-form' onSubmit={handleSubmit}>
-                        <textarea className='post-textarea' onChange={handleContentChange} placeholder='Write your post' />
+                        <textarea value={post.content} className='post-textarea' onChange={handleContentChange} placeholder='Write your post' />
                         <button onClick={onClose} type='submit' className="submit-btn">
                             Submit
                         </button>

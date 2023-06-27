@@ -29,9 +29,7 @@ function App() {
 
   function deletedPost(newPost){
     const allPosts = posts.filter(post => post.id !== newPost);
-    console.log(allPosts)
     setPosts(allPosts)
-
   }
   
   useEffect(()=>{
@@ -52,14 +50,12 @@ function App() {
       .then(data => setUsers(data))
   }, [])
 
-  console.log(users)
+  // console.log(users.friends)
 
   const notifFriends = users?.friends.filter((friend)=> friend.user_id === users.id)
   const friendsList = users?.friends.filter((friend) => friend.status === 'accepted')
   const additionalAccepted = users?.users.filter((friend) => friend.status === 'accepted')
   const allFriends = friendsList?.concat(additionalAccepted)
-  console.log(allFriends)
-  console.log(notifFriends)
 
   if (!users) return (
     <div className='body'>
@@ -78,7 +74,7 @@ function App() {
         <Route path="/logout" element={<Logout setUsers={setUsers} />} />
         <Route path='/home' element={<HomePage deletedPost={deletedPost} users={users} posts={posts} setPosts={setPosts}/>} />
         <Route path='/messages' element={<Messages />} />
-        <Route path='/profile' element={<Profile friendsList={allFriends} setPosts={setPosts} users={users} posts={posts} friends={friends}/>} />
+        <Route path='/profile' element={<Profile deletedPost={deletedPost} friendsList={allFriends} setPosts={setPosts} users={users} posts={posts} friends={friends}/>} />
         <Route path='/friends' element={<Friends friends={friends} users={users}/>} />
         <Route path='/music' element={<Music />} />
         <Route path='/notifications' element={<Notifications notifFriends={notifFriends} friends={friends} users={users}/>}/>

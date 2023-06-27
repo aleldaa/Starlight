@@ -7,20 +7,30 @@ import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
 import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 import Comments from "./Comments";
-import { data } from "jquery";
 
-function Posts({ id, content, user, currentUser, deletedPost }) {
+
+function Posts({id, content, user, currentUser, deletedPost }) {
   const [isCurrentUserPost, setIsCurrentUserPost] = useState(false);
   const [comments, setComments] = useState([])
-  const [comment, setComment] = useState({ content: "", user_id: user.id, post_id: })
+  const [comment, setComment] = useState({ content: "", user_id: currentUser.id, post_id: id })
 
-  const commentsList = user.comments.map((comment) => {
+  
+  const commentfilter = comments.filter((com) => com.post_id === id)
+  const commentsList = commentfilter.map((comment) => {
     return <Comments
       key={comment.id}
       content={comment.content}
-      user={user}
+      user={comment.user}
+      id={comment.id}
+      currentUser={currentUser}
+      deletedComment={deletedComment}
     />
   })
+
+  function deletedComment(newComment){
+    const allComments = comments.filter(comment => comment.id !== newComment);
+    setComments(allComments)
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -32,6 +42,7 @@ function Posts({ id, content, user, currentUser, deletedPost }) {
       .then(res => res.json())
       .then(data => {
         setComments(prevCommentData => [...prevCommentData, data])
+        setComment({ ...comment, content: "" })
       })
   }
 
@@ -52,7 +63,6 @@ function Posts({ id, content, user, currentUser, deletedPost }) {
   });
 
   function handleDelete(id) {
-    console.log(id)
     deletedPost(id)
     fetch(`/api/posts/${id}`, {
       method: 'DELETE'
@@ -63,9 +73,11 @@ function Posts({ id, content, user, currentUser, deletedPost }) {
     setComment({ ...comment, content: e.target.value });
   }
 
+  const commentPic = cld.image(currentUser.profile_picture)
   const profilePic = cld.image(user.profile_picture);
 
   profilePic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
+  commentPic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
 
   return (
     <div className="posts">
@@ -92,9 +104,19 @@ function Posts({ id, content, user, currentUser, deletedPost }) {
         <div className="comments">
           {commentsList}
           <div className="comment-form-wrap">
+          <AdvancedImage
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null;
+              currentTarget.src = '/src/images/profile-pic-default.png';
+            }}
+            className='comment-pic2'
+            cldImg={commentPic}
+          />
             <form className="comment-form" onSubmit={handleSubmit}>
-              <textarea onSubmit={handleContentChange} placeholder="Write a comment..." />
-              <button className="comment-submit" type="submit">Submit</button>
+              <textarea  value={comment.content} className="comment-textarea" onChange={handleContentChange} placeholder="Write a comment..." />
+              <button className="comment-submit" type="submit">
+                <img className="comment-submit-img" src="/src/images/paper-plane.png"/>
+              </button>
             </form>
           </div>
         </div>

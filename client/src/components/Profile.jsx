@@ -1,22 +1,20 @@
 import { useState, useEffect, useRef } from "react"
 import UploadWidget from "./UploadWidget"
 import UploadWidget2 from "./UploadWidget2"
+import UserPosts from "./UserPosts";
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
-import { fill, crop } from "@cloudinary/url-gen/actions/resize"
-import UserPosts from "./UserPosts";
+import { fill } from "@cloudinary/url-gen/actions/resize"
 import { thumbnail } from "@cloudinary/url-gen/actions/resize";
-import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
 import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 
-function Profile({ users, posts, setPosts, friendsList }) {
+function Profile({ deletedPost, users, posts, setPosts, friendsList }) {
 
   const [post, setPost] = useState({ title: "", content: "", user_id: users.id })
   const [friends, setFriends] = useState({ user_friend: '' })
   const [bannerUrl, setBannerUrl] = useState(users.banner_picture);
   const [profilePicUrl, setProfilePicUrl] = useState(users.profile_picture);
-
 
   const reversedPosts = posts ? Array.from(posts).reverse() : [];
   const currentUserPosts = reversedPosts.filter((post) => post.user_id === users.id);
@@ -25,9 +23,10 @@ function Profile({ users, posts, setPosts, friendsList }) {
       key={post.id}
       post={post}
       user={post.user}
+      id={post.id}
+      deletedPost={deletedPost}
     />;
   });
-  console.log(users)
 
   useEffect(() => {
     if (users.users.length !== 0) {
@@ -47,10 +46,10 @@ function Profile({ users, posts, setPosts, friendsList }) {
       cloudName: 'dakv6swek'
     }
   });
-console.log(friendsList)
+
   const friendProfile = friendsList.map((friend) => {
     let proImage = friend.friend_id === users.id ? friend.user_friend.profile_picture : friend.user_user.profile_picture
-    console.log(proImage)
+
     return (
       <AdvancedImage
         onError={({ currentTarget }) => {
@@ -62,7 +61,7 @@ console.log(friendsList)
       />
     )
   })
-  console.log(friendProfile)
+
   const friendPic = cld.image(friends.user_friend.profile_picture)
 
   friendPic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
@@ -137,9 +136,9 @@ console.log(friendsList)
           <div className='post-name'>
             <h1>{users.name}</h1>
           </div>
-          <form className='post-form' onClick={onClose} onSubmit={handleSubmit}>
+          <form className='post-form' onSubmit={handleSubmit}>
             <textarea className='post-textarea' onChange={handleContentChange} placeholder='Write your post' />
-            <button type='submit' className="submit-btn">
+            <button onClick={onClose} type='submit' className="submit-btn">
               Submit
             </button>
           </form>

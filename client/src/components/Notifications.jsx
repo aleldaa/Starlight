@@ -4,7 +4,7 @@ function Notifications({ users, friends, notifFriends }) {
   const [notifications, setNotifications] = useState([]);
   const [request, setRequest] = useState({ status: "", user_id: users.id })
   const [request2, setRequest2] = useState({status: "", user_id: friends.id})
-console.log(notifFriends)
+
   useEffect(() => {
     fetch(`/api/notifications/${users.id}`)
       .then(response => {
