@@ -9,7 +9,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-user.posts.comments','-comments.user', '-sent_friend_requests', '-received_friend', '-friend_requests', '-received_friend_requests', '-posts.user', '-messages_sent.sender', '-messages_received.receiver', '-received_notifications', '-sent_notifications',  '-posts.user')
+    serialize_rules = ('-comments.user', '-sent_friend_requests', '-received_friend', '-friend_requests', '-received_friend_requests', '-posts.user', '-messages_sent.sender', '-messages_received.receiver', '-received_notifications', '-sent_notifications')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -80,13 +80,15 @@ class User(db.Model, SerializerMixin):
 class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
 
-    serialize_rules = ('-user.posts', '-comments')
+    serialize_rules = ( '-comments',)
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String)
     title = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
@@ -135,7 +137,7 @@ class Interest(db.Model, SerializerMixin):
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
 
-    serialize_rules = ('-post', '-user.comments')
+    serialize_rules = ('-post',  '-comment')
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String, nullable=False)

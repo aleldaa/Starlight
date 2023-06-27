@@ -155,6 +155,18 @@ class Comments(Resource):
         comments = [comment.to_dict() for comment in Comment.query.all()]
         return make_response(jsonify(comments), 200)
 
+    def post(self):
+        data = request.get_json()
+        new_comment = Comment(
+            content=data['content'],
+            post_id=data['post_id'],
+            user_id=['user_id'],
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+
+        return make_response(jsonify(new_comment.to_dict()), 201)
+
 class Messages(Resource):
     def get(self):
         messages = [message.to_dict() for message in Message.query.all()]

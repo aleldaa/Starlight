@@ -544,3 +544,23 @@ nav {
     display: flex;
     justify-content: end;
 }
+
+.comments{
+    /* background-color: #1c1c1e; */
+    border-radius: 10px;
+}
+
+.comment h5{
+    color: #b967e6;
+}
+
+.comment p{
+    color: aliceblue;
+}
+
+.comment-wrapper{
+    background-color: #2e2d2f;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
