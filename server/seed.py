@@ -85,7 +85,7 @@ def generate_seed_data():
     db.create_all()
 
     users = []
-    for _ in range(3):
+    for _ in range(1):
         user = generate_user()
         users.append(user)
 
@@ -93,7 +93,7 @@ def generate_seed_data():
     db.session.commit()
 
     for user in users:
-        for _ in range(randint(1, 5)):
+        for _ in range(1):
             post = generate_post(user)
             db.session.add(post)
 
@@ -108,7 +108,7 @@ def generate_seed_data():
     db.session.commit()
 
     for user in users:
-        friend_count = randint(0, 5)
+        friend_count = randint(1, 3)
         for _ in range(friend_count):
             friend = choice(users)
             friendship = generate_friend(user, friend)
@@ -117,7 +117,7 @@ def generate_seed_data():
     db.session.commit()
 
     for user in users:
-        for _ in range(randint(1, 3)):
+        for _ in range(1):
             interest = generate_interest(user)
             db.session.add(interest)
 
@@ -126,7 +126,7 @@ def generate_seed_data():
     posts = Post.query.all()
 
     for user in users:
-        for _ in range(randint(1, 5)):
+        for _ in range(1):
             post = choice(posts)
             comment = generate_comment(user, post)
             db.session.add(comment)
@@ -134,7 +134,7 @@ def generate_seed_data():
     db.session.commit()
 
     for user in users:
-        for _ in range(randint(1, 5)):
+        for _ in range(1):
             post = choice(posts)
             like = generate_like(user, post)
             db.session.add(like)
@@ -142,7 +142,7 @@ def generate_seed_data():
     db.session.commit()
 
     for user in users:
-        for _ in range(randint(1, 5)):
+        for _ in range(1):
             sender = choice(users)
             recipient = choice(users)
             notification = generate_notification(sender, recipient)
