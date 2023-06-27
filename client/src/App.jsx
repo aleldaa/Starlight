@@ -24,12 +24,18 @@ function App() {
   const [users, setUsers] = useState(null)
   const [posts, setPosts] = useState([])
   const [friends, setFriends] = useState([])
+  const [comments, setComments] = useState([])
 
   const updateUser = (user) => setUsers(user)
 
   function deletedPost(newPost){
     const allPosts = posts.filter(post => post.id !== newPost);
     setPosts(allPosts)
+  }
+
+  function deletedComment(newComment){
+    const allComments = comments.filter(comment => comment.id !== newComment);
+    setComments(allComments)
   }
   
   useEffect(()=>{
@@ -48,6 +54,12 @@ function App() {
     fetch('/api/check_session')
       .then(res => res.json())
       .then(data => setUsers(data))
+  }, [])
+
+  useEffect(() => {
+    fetch('/api/comments')
+      .then(res => res.json())
+      .then(data => setComments(data))
   }, [])
 
   // console.log(users.friends)
@@ -72,9 +84,9 @@ function App() {
       <NavBar setUsers={setUsers} onChangePage={setPage} />
       <Routes>
         <Route path="/logout" element={<Logout setUsers={setUsers} />} />
-        <Route path='/home' element={<HomePage deletedPost={deletedPost} users={users} posts={posts} setPosts={setPosts}/>} />
+        <Route path='/home' element={<HomePage setComments={setComments} comments={comments} deletedComment={deletedComment} deletedPost={deletedPost} users={users} posts={posts} setPosts={setPosts}/>} />
         <Route path='/messages' element={<Messages />} />
-        <Route path='/profile' element={<Profile deletedPost={deletedPost} friendsList={allFriends} setPosts={setPosts} users={users} posts={posts} friends={friends}/>} />
+        <Route path='/profile' element={<Profile setComments={setComments} comments={comments} deletedComment={deletedComment} deletedPost={deletedPost} friendsList={allFriends} setPosts={setPosts} users={users} posts={posts} friends={friends}/>} />
         <Route path='/friends' element={<Friends friends={friends} users={users}/>} />
         <Route path='/music' element={<Music />} />
         <Route path='/notifications' element={<Notifications notifFriends={notifFriends} friends={friends} users={users}/>}/>

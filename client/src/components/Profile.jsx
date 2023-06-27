@@ -9,7 +9,7 @@ import { thumbnail } from "@cloudinary/url-gen/actions/resize";
 import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 
-function Profile({ deletedPost, users, posts, setPosts, friendsList }) {
+function Profile({ setComments, comments, deletedPost, deletedComment, users, posts, setPosts, friendsList }) {
 
   const [post, setPost] = useState({ title: "", content: "", user_id: users.id })
   const [friends, setFriends] = useState({ user_friend: '' })
@@ -25,6 +25,9 @@ function Profile({ deletedPost, users, posts, setPosts, friendsList }) {
       user={post.user}
       id={post.id}
       deletedPost={deletedPost}
+      setComments={setComments}
+      comments={comments}
+      deletedComment={deletedComment}
     />;
   });
 
@@ -49,7 +52,6 @@ function Profile({ deletedPost, users, posts, setPosts, friendsList }) {
 
   const friendProfile = friendsList.map((friend) => {
     let proImage = friend.friend_id === users.id ? friend.user_friend.profile_picture : friend.user_user.profile_picture
-
     return (
       <AdvancedImage
         onError={({ currentTarget }) => {
@@ -63,7 +65,6 @@ function Profile({ deletedPost, users, posts, setPosts, friendsList }) {
   })
 
   const friendPic = cld.image(friends.user_friend.profile_picture)
-
   friendPic.resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())));
 
   const dialogRef = useRef(null);

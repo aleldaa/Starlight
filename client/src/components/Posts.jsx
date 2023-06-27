@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
-import { fill } from "@cloudinary/url-gen/actions/resize"
 import { thumbnail } from "@cloudinary/url-gen/actions/resize";
-import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
 import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 import Comments from "./Comments";
 
 
-function Posts({id, content, user, currentUser, deletedPost }) {
+function Posts({id, content, user, currentUser, deletedPost, deletedComment, comments, setComments }) {
   const [isCurrentUserPost, setIsCurrentUserPost] = useState(false);
-  const [comments, setComments] = useState([])
   const [comment, setComment] = useState({ content: "", user_id: currentUser.id, post_id: id })
 
   
@@ -27,11 +24,6 @@ function Posts({id, content, user, currentUser, deletedPost }) {
     />
   })
 
-  function deletedComment(newComment){
-    const allComments = comments.filter(comment => comment.id !== newComment);
-    setComments(allComments)
-  }
-
   function handleSubmit(e) {
     e.preventDefault()
     fetch('/api/comments', {
@@ -45,12 +37,6 @@ function Posts({id, content, user, currentUser, deletedPost }) {
         setComment({ ...comment, content: "" })
       })
   }
-
-  useEffect(() => {
-    fetch('/api/comments')
-      .then(res => res.json())
-      .then(data => setComments(data))
-  }, [])
 
   useEffect(() => {
     setIsCurrentUserPost(currentUser && currentUser.id === user.id);

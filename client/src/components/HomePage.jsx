@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Posts from './Posts';
 
-function HomePage({ posts, users, setPosts, deletedPost, deletedComment }) {
+function HomePage({ posts, users, setPosts, deletedPost, deletedComment, comments, setComments }) {
 
     const [post, setPost] = useState({ content: "", user_id: users.id })
     const reversedPosts = posts ? Array.from(posts).reverse() : [];
@@ -20,6 +20,8 @@ function HomePage({ posts, users, setPosts, deletedPost, deletedComment }) {
             deletedComment={deletedComment}
             deletedPost={deletedPost}
             id={post.id}
+            comments={comments}
+            setComments={setComments}
         />;
     });
 
