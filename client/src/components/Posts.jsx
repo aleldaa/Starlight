@@ -7,12 +7,42 @@ import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 import Comments from "./Comments";
 
 
-function Posts({id, content, user, currentUser, deletedPost, deletedComment, comments, setComments }) {
+function Posts({ deletedLike, likes, setLikes, posts, id, content, user, currentUser, deletedPost, deletedComment, comments, setComments }) {
   const [isCurrentUserPost, setIsCurrentUserPost] = useState(false);
   const [comment, setComment] = useState({ content: "", user_id: currentUser.id, post_id: id })
+  const [favorite, setFavorite] = useState(true)
+  const [like, setLike] = useState({ status: true,  post_id: id, user_id: currentUser.id})
 
+  function handleClick() {
+    setFavorite(!favorite)
+
+  }
+
+  function handleLikePost(){
+    fetch('/api/likes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(like)
+  })
+      .then(res => res.json())
+      .then(data => {
+         console.log(data)
+          // setLike({ ...like, status: "" })
+      })
+  }
+  console.log(likes)
+  function handleLikeDelete(id){
+    deletedLike(likes.id)
+    console.log(likes.id)
+    fetch(`/api/likes/${likes.id}`,{
+      method: "DELETE"
+    })
+  }
   
+
   const commentfilter = comments.filter((com) => com.post_id === id)
+  const likesFilter = likes.filter((li)=>console.log(li))
+
   const commentsList = commentfilter.map((comment) => {
     return <Comments
       key={comment.id}
@@ -42,12 +72,6 @@ function Posts({id, content, user, currentUser, deletedPost, deletedComment, com
     setIsCurrentUserPost(currentUser && currentUser.id === user.id);
   }, [currentUser, user]);
 
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: 'dakv6swek'
-    }
-  });
-
   function handleDelete(id) {
     deletedPost(id)
     fetch(`/api/posts/${id}`, {
@@ -59,6 +83,11 @@ function Posts({id, content, user, currentUser, deletedPost, deletedComment, com
     setComment({ ...comment, content: e.target.value });
   }
 
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: 'dakv6swek'
+    }
+  });
   const commentPic = cld.image(currentUser.profile_picture)
   const profilePic = cld.image(user.profile_picture);
 
@@ -69,6 +98,13 @@ function Posts({id, content, user, currentUser, deletedPost, deletedComment, com
     <div className="posts">
       <div className="post-body">
         <div className="post-pic-wrapper">
+          {isCurrentUserPost && (
+            <div className="delete-btn-wrap">
+              <button onClick={() => handleDelete(id)} className="delete-btn">
+                <img className="delete-btn-img" src="/src/images/delete.png" />
+              </button>
+            </div>
+          )}
           <AdvancedImage
             onError={({ currentTarget }) => {
               currentTarget.onerror = null;
@@ -80,28 +116,30 @@ function Posts({id, content, user, currentUser, deletedPost, deletedComment, com
         </div>
         <h5 className="post-name">{user.name}</h5>
         <h4 className="post-content">{content}</h4>
-        {isCurrentUserPost && (
-          <div className="delete-btn-wrap">
-            <button onClick={() => handleDelete(id)} className="delete-btn">
-              <img className="delete-btn-img" src="/src/images/delete.png" />
-            </button>
-          </div>
+        {favorite ? (
+          <button onClick={()=>{handleClick(); handleLikePost()}} className="like-btn">
+            <img className="like-btn-heart" src="/src/images/heart.png" />
+          </button>
+        ) : (
+          <button onClick={()=>{handleClick(); handleLikeDelete()}} className="like-btn2">
+            <img className="like-btn-heart" src="/src/images/heart.png" />
+          </button>
         )}
         <div className="comments">
           {commentsList}
           <div className="comment-form-wrap">
-          <AdvancedImage
-            onError={({ currentTarget }) => {
-              currentTarget.onerror = null;
-              currentTarget.src = '/src/images/profile-pic-default.png';
-            }}
-            className='comment-pic2'
-            cldImg={commentPic}
-          />
+            <AdvancedImage
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null;
+                currentTarget.src = '/src/images/profile-pic-default.png';
+              }}
+              className='comment-pic2'
+              cldImg={commentPic}
+            />
             <form className="comment-form" onSubmit={handleSubmit}>
-              <textarea  value={comment.content} className="comment-textarea" onChange={handleContentChange} placeholder="Write a comment..." />
+              <textarea value={comment.content} className="comment-textarea" onChange={handleContentChange} placeholder="Write a comment..." />
               <button className="comment-submit" type="submit">
-                <img className="comment-submit-img" src="/src/images/paper-plane.png"/>
+                <img className="comment-submit-img" src="/src/images/paper-plane.png" />
               </button>
             </form>
           </div>

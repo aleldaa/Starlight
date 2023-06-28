@@ -144,7 +144,7 @@ class Comment(db.Model, SerializerMixin):
     
     post = db.relationship('Post', backref='comments')
 
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 class Like(db.Model, SerializerMixin):
@@ -155,6 +155,7 @@ class Like(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    status = db.Column(db.Boolean)
 
     song_id = db.Column(db.Integer, db.ForeignKey('songs.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)

@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { Route } from 'react-router'
 import { Routes } from 'react-router-dom'
-
-
 import NavBar from './components/NavBar'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
@@ -17,7 +15,6 @@ import Friends from './components/Friends'
 import Music from './components/Music'
 import Notifications from './components/Notifications'
 
-
 function App() {
 
   const [page, setPage] = useState('/')
@@ -25,6 +22,7 @@ function App() {
   const [posts, setPosts] = useState([])
   const [friends, setFriends] = useState([])
   const [comments, setComments] = useState([])
+  const [likes, setLikes] = useState([])
 
 
   const updateUser = (user) => setUsers(user)
@@ -39,6 +37,17 @@ function App() {
     setComments(allComments)
   }
 
+  function deletedLike(newLike) {
+    const allLikes = likes.filter(like => like.id !== newLike)
+    setLikes(allLikes)
+  }
+
+  useEffect(() => {
+    fetch('/api/likes')
+      .then(res => res.json())
+      .then(data => setLikes(data))
+  }, [])
+console.log(likes)
   useEffect(() => {
     fetch('/api/users')
       .then(res => res.json())
@@ -85,12 +94,40 @@ function App() {
       <NavBar setUsers={setUsers} onChangePage={setPage} />
       <Routes>
         <Route path="/logout" element={<Logout setUsers={setUsers} />} />
-        <Route path='/home' element={<HomePage setComments={setComments} comments={comments} deletedComment={deletedComment} deletedPost={deletedPost} users={users} posts={posts} setPosts={setPosts} />} />
+        <Route path='/home' element={<HomePage
+                                      likes={likes} 
+                                      setLikes={setLikes} 
+                                      setComments={setComments} 
+                                      comments={comments} 
+                                      deletedComment={deletedComment} 
+                                      deletedPost={deletedPost} 
+                                      deletedLike={deletedLike} 
+                                      users={users} 
+                                      posts={posts} 
+                                      setPosts={setPosts} 
+                                    />} />
         <Route path='/messages' element={<Messages />} />
-        <Route path='/profile' element={<Profile setComments={setComments} comments={comments} deletedComment={deletedComment} deletedPost={deletedPost} friendsList={allFriends} setPosts={setPosts} users={users} posts={posts} friends={friends} />} />
+        <Route path='/profile' element={<Profile 
+                                          setFriend={setFriends} 
+                                          setUsers={setUsers} 
+                                          setComments={setComments} 
+                                          comments={comments} 
+                                          deletedComment={deletedComment} 
+                                          deletedPost={deletedPost} 
+                                          friendsList={allFriends} 
+                                          setPosts={setPosts} 
+                                          users={users} 
+                                          posts={posts} 
+                                          friends={friends} 
+                                        />} />
         <Route path='/friends' element={<Friends friends={friends} users={users} />} />
         <Route path='/music' element={<Music />} />
-        <Route path='/notifications' element={<Notifications setRequest={setRequest} setRequest2={setRequest2} friends={friends} users={users} />} />
+        <Route path='/notifications' element={<Notifications 
+                                                setRequest={setRequest} 
+                                                setRequest2={setRequest2} 
+                                                friends={friends} 
+                                                users={users} 
+                                              />} />
       </Routes>
     </div>
   )

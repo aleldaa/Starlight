@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 
 # Local imports
 from config import app, db, api, bcrypt
-from models import User, Post, Message, Friend, Notification, Comment
+from models import User, Post, Message, Friend, Notification, Comment, Like
 # Views go here!
 
 class Users(Resource):
@@ -43,11 +43,9 @@ class Users(Resource):
 
         return response
 
-# GET & PATCH working for Lauren; not POST
 class UsersById(Resource):
 
     def get(self, id):
-         
         user_dict = User.query.filter_by(id=id).first().to_dict()
 
         response = make_response(
@@ -77,7 +75,6 @@ class UsersById(Resource):
         
     def post(self):
         data = request.get_json()
-
         new_user = User(
             id = data['id'],
             username=data['username'],
@@ -87,7 +84,6 @@ class UsersById(Resource):
             banner_picture=request.get_json()['banner_picture'],
             bio=data['bio']
         )
-
         db.session.add(new_user)
         db.session.commit()
 
@@ -143,6 +139,9 @@ class PostsById(Resource):
         return make_response(jsonify(post.to_dict()), 202)
 
     def delete(self, id):
+        all_comments = Comment.query.filter_by(post_id=id).all()
+        for comment in all_comments:
+            db.session.delete(comment)
         post = Post.query.filter_by(id=id).first()
         if post == None:
             return({'error': '404: Not Found.'})
@@ -173,6 +172,32 @@ class CommentsById(Resource):
         if comment == None:
             return({'error': '404: Not Found.'})
         db.session.delete(comment)
+        db.session.commit()
+        return make_response('', 204)
+
+class Likes(Resource):
+    def get(self):
+        likes = [like.to_dict() for like in Like.query.all()]
+        return make_response(jsonify(likes), 200)
+
+    def post(self):
+        data = request.get_json()
+        new_like = Like(
+            status=data['status'],
+            post_id=data['post_id'],
+            user_id=data['user_id'],
+        )
+        db.session.add(new_like)
+        db.session.commit()
+
+        return make_response(jsonify(new_like.to_dict()), 201)
+
+class LikesById(Resource):
+    def delete(self, id):
+        like = Like.query.filter_by(id=id).first()
+        if like == None:
+            return({'error': '404: Not Found.'})
+        db.session.delete(like)
         db.session.commit()
         return make_response('', 204)
 
@@ -398,6 +423,8 @@ api.add_resource(Posts, '/posts')
 api.add_resource(PostsById, '/posts/<int:id>')
 api.add_resource(Comments, '/comments')
 api.add_resource(CommentsById, '/comments/<int:id>')
+api.add_resource(Likes, '/likes')
+api.add_resource(LikesById, '/likes/<int:id>')
 api.add_resource(Messages, '/messages')
 api.add_resource(MessagesById, '/messages/<int:id>')
 api.add_resource(Friends, '/friends')

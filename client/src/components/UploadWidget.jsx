@@ -1,34 +1,45 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 
-function UploadWidget({users, setProfilePicUrl}){
+function UploadWidget({ setFriends, setComments, setPosts, setUsers, users, setProfilePicUrl }) {
 
     const cloudinaryRef = useRef()
     const widgetRef = useRef()
-    useEffect(()=>{
+    useEffect(() => {
         cloudinaryRef.current = window.cloudinary
         widgetRef.current = cloudinaryRef.current.createUploadWidget({
             cloudName: 'dakv6swek',
             uploadPreset: 'Starlight'
-        }, function(error, result){
-            if(result.info.files){
+        }, function (error, result) {
+            if (result.info.files) {
                 const new_profile_picture = result.info.files[0].uploadInfo.path
                 setProfilePicUrl(new_profile_picture)
                 fetch(`/api/users/${users.id}`, {
                     method: 'PATCH',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({profile_picture: new_profile_picture})
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ profile_picture: new_profile_picture })
                 })
-                    .then(res=>res.json())
-                    .then(data=>console.log(data))
+                    .then(res => res.json())
+                    .then(data => {
+                        setUsers(data)
+                        fetch('/api/posts')
+                            .then(res => res.json())
+                            .then(data => setPosts(data))
+                        fetch('api/comments')
+                            .then(res => res.json())
+                            .then(data => setComments(data))
+                        fetch('/api/users')
+                            .then(res => res.json())
+                            .then(data => setFriends(data))
+                    })
                 console.log(result.info.files[0].uploadInfo.path)
             }
         })
     }, [])
 
-    return(
+    return (
         <div className="upload-btn-wrapper">
-            <button className="upload-button" onClick={()=> widgetRef.current.open()}>
-                <img className="button-img" src="/src/images/camera.png"/>
+            <button className="upload-button" onClick={() => widgetRef.current.open()}>
+                <img className="button-img" src="/src/images/camera.png" />
             </button>
         </div>
     )

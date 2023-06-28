@@ -9,7 +9,7 @@ import { thumbnail } from "@cloudinary/url-gen/actions/resize";
 import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 
-function Profile({ setComments, comments, deletedPost, deletedComment, users, posts, setPosts, friendsList }) {
+function Profile({ setFriend, setUsers, setComments, comments, deletedPost, deletedComment, users, posts, setPosts, friendsList }) {
 
   const [post, setPost] = useState({ title: "", content: "", user_id: users.id })
   const [friends, setFriends] = useState({ user_friend: '' })
@@ -115,7 +115,7 @@ function Profile({ setComments, comments, deletedPost, deletedComment, users, po
         </div>
         <div className="name-pic">
           <div>
-            <UploadWidget setProfilePicUrl={setProfilePicUrl} users={users} />
+            <UploadWidget setFriends={setFriend} setComments={setComments} setPosts={setPosts} setUsers={setUsers} setProfilePicUrl={setProfilePicUrl} users={users} />
           </div>
           <div className="profile-pic-wrapper">
             <AdvancedImage
@@ -143,7 +143,6 @@ function Profile({ setComments, comments, deletedPost, deletedComment, users, po
               Submit
             </button>
           </form>
-          <h5 className='esc'>(Esc to exit)</h5>
         </dialog>
         <div className='post-title-wrapper2'>
           <div className="post-title2" onClick={handleShowDialog}>
