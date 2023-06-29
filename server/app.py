@@ -6,6 +6,8 @@
 from flask import render_template, request, jsonify, make_response, session
 from flask_restful import Resource, reqparse
 from werkzeug.utils import secure_filename
+from dotenv import load_dotenv
+load_dotenv()
 
 
 # Local imports
