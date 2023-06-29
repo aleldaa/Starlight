@@ -14,6 +14,7 @@ import Profile from './components/Profile'
 import Friends from './components/Friends'
 import Music from './components/Music'
 import Notifications from './components/Notifications'
+import Footer from './components/Footer'
 
 function App() {
 
@@ -87,6 +88,7 @@ function App() {
         <Route path='/signup' element={<SignUp updateUser={updateUser} />} />
         <Route path='/login' element={<Login setUsers={setUsers} />} />
       </Routes>
+      <Footer/>
     </div>
   )
   return (
@@ -129,6 +131,7 @@ function App() {
                                                 users={users} 
                                               />} />
       </Routes>
+      <Footer/>
     </div>
   )
 }

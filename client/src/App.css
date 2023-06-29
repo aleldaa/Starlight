@@ -676,3 +676,13 @@ nav {
     
 
 }
+
+.footer{
+    display: flex;
+    justify-content: center;
+}
+
+.footer a{
+    /* background-color: #232224; */
+    color: rgb(50, 50, 50);
+}
