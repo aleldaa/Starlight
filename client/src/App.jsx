@@ -47,7 +47,7 @@ function App() {
       .then(res => res.json())
       .then(data => setLikes(data))
   }, [])
-console.log(likes)
+
   useEffect(() => {
     fetch('/api/users')
       .then(res => res.json())

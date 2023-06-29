@@ -44,7 +44,7 @@ function UserComments({ id, content, user, currentUser, deletedComment }) {
                 <h5>{user.name}</h5>
                 <p>{content}</p>
                     <div className="delete-btn-wrap">
-                        <button onClick={() => handleDelete(id)} className="delete-btn">
+                        <button onClick={() => handleDelete(id)} className="delete-btn2">
                             <img className="delete-btn-img" src="/src/images/delete.png" />
                         </button>
                     </div>

@@ -50,12 +50,14 @@ function Notifications({ users, friends, setRequest, setRequest2 }) {
             <div className='notif-wrapper'>
               <p className='notif-msg'>{notification.message}</p>
               <h3 className='notif-name'>{notification.sender.name}</h3>
-              <button
-                className='notif-btn'
-                onClick={() => acceptFriendRequest(notification.friendship_id, notification.id)}
-              >
-                Accept
-              </button>
+              <div className='notif-btn-wrap'>
+                <button
+                  className='notif-btn'
+                  onClick={() => acceptFriendRequest(notification.friendship_id, notification.id)}
+                >
+                  Accept
+                </button>
+              </div>
             </div>
           </div>
         ))

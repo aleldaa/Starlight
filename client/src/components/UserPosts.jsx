@@ -78,7 +78,7 @@ function UserPosts({ comments, deletedComment, setComments, id, deletedPost, pos
                 <h2 className="post-name">{user.name}</h2>
                 <p className="post-content">{post.content}</p>
                 <div className="delete-btn-wrap">
-                    <button onClick={() => handleDelete(id)} className="delete-btn">
+                    <button onClick={() => handleDelete(id)} className="delete-btn3">
                         <img className="delete-btn-img" src="/src/images/delete.png" />
                     </button>
                 </div>

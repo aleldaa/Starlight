@@ -98,9 +98,6 @@ function Profile({ setFriend, setUsers, setComments, comments, deletedPost, dele
     <div>
       <div className="profile-page">
         <div className="banner-wrapper">
-          <div>
-
-          </div>
           <div className="banner-div">
             <AdvancedImage
               onError={({ currentTarget }) => {
@@ -138,7 +135,7 @@ function Profile({ setFriend, setUsers, setComments, comments, deletedPost, dele
             <h1>{users.name}</h1>
           </div>
           <form className='post-form' onSubmit={handleSubmit}>
-            <textarea className='post-textarea' onChange={handleContentChange} placeholder='Write your post' />
+            <textarea className='post-textarea' onChange={handleContentChange} placeholder='Write your post...' />
             <button onClick={onClose} type='submit' className="submit-btn">
               Submit
             </button>

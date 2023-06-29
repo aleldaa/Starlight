@@ -150,42 +150,7 @@ nav {
     transform: translate(-50%, -50%);
 }
 
-@media screen and (max-width: 600px) {
-    .navbar-elements {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
 
-    .home-icon,
-    .message-icon,
-    .profile-icon,
-    .friends-icon,
-    .music-icon,
-    .notif-icon{
-        padding: 10px;
-        /* Adjust the padding to your desired spacing */
-    }
-}
-
-@media screen and (min-width: 601px) and (max-width: 1000px) {
-    .navbar-elements {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .home-icon,
-    .message-icon,
-    .profile-icon,
-    .friends-icon,
-    .music-icon, 
-    .notif-icon{
-        padding: 20px;
-        /* Adjust the padding to your desired spacing */
-    }
-
-}
 
 .popup .show {
     visibility: visible;
@@ -229,11 +194,6 @@ nav {
     box-shadow: 1px 1px 1px 3px black;
 }
 
-/* .post-title-list{
-    border-style: solid;
-    
-} */
-
 .post-list {
     display: flex;
     justify-content: center;
@@ -241,7 +201,7 @@ nav {
 }
 
 .post-list2{
-    width: 71%;
+    width: 80%;
     position: relative;
     top: 0;
     left: 50%;
@@ -266,11 +226,13 @@ nav {
 
 .submit-btn{
     margin-left: 38.5%;
-    background-color: #b967e6;
+    background-color: #343335;
     color: aliceblue;
     border-radius: 5px;
     height: 40px;
     width: 70px;
+    border: none;
+    margin-top: 13px;
 }
 
 .esc{
@@ -376,12 +338,14 @@ nav {
 }
 
 .cancel-btn{
-    width: 10px
+    width: 10px;
+    margin-top: 4px;
 }
 
 .cancel-btn-wrap{
-    background-color: transparent;
+    background-color:#343335;
     border-radius: 5px;
+    border: none;
 }
 
 .friend-pic{
@@ -415,6 +379,7 @@ nav {
     display: flex;
     flex-wrap: wrap;
     margin-top: 20px;
+    justify-content: center;
 }
 
 .search{
@@ -457,13 +422,17 @@ nav {
 }
 
 .notif-btn{
-    background-color: #232224;
+    background-color: #201f21;
     color: #b967e6;
     border-radius: 5px;
     width: 100px;
     height: 30px;
-    position: relative;
-    left: 150px;
+    border: none;
+}
+
+.notif-btn-wrap{
+    display: flex;
+    justify-content: center;
 }
 
 .notif-page h1{
@@ -508,10 +477,6 @@ nav {
     margin: 20px;
 }
 
-/* .friend-title-wrap{
-
-} */
-
 .friends-on-profile{
     background-color: #232224;
     border-radius: 20px;
@@ -544,8 +509,17 @@ nav {
 .delete-btn2{
     background-color: #2a292a;
     border-radius: 20px;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top:-185px;
+    margin-bottom: 155px;
+    border: none;
+    padding-top: 5.5px;
+}
+
+.delete-btn3{
+    background-color: #2a292a;
+    border-radius: 20px;
+    margin-top:-170px;
+    margin-bottom: 155px;
     border: none;
     padding-top: 5.5px;
 }
@@ -643,4 +617,62 @@ nav {
     border-radius: 50px;
     border: none;
     padding-top: 6.5px;
+}
+
+@media screen and (max-width: 600px) {
+    .navbar-elements {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .home-icon,
+    .message-icon,
+    .profile-icon,
+    .friends-icon,
+    .music-icon,
+    .notif-icon{
+        padding: 10px;
+        /* Adjust the padding to your desired spacing */
+    }
+    .post-title2 h5 {
+        width: 70%;
+    }
+    .post-title h5{
+        width: 70%
+    }
+    .comment-pic2{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+        margin-left: -40px;
+    }
+    .friends-list{
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+    .notif-wrapper{
+        width: 90%;
+    }
+}
+
+@media screen and (min-width: 601px) and (max-width: 1000px) {
+    .navbar-elements {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .home-icon,
+    .message-icon,
+    .profile-icon,
+    .friends-icon,
+    .music-icon, 
+    .notif-icon{
+        padding: 20px;
+    }
+    
+
 }

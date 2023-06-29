@@ -65,7 +65,7 @@ function HomePage({ deletedLike, likes, setLikes, posts, users, setPosts, delete
                         <h1>{users.name}</h1>
                     </div>
                     <form className='post-form' onSubmit={handleSubmit}>
-                        <textarea value={post.content} className='post-textarea' onChange={handleContentChange} placeholder='Write your post' />
+                        <textarea value={post.content} className='post-textarea' onChange={handleContentChange} placeholder='Write a post...' />
                         <button onClick={onClose} type='submit' className="submit-btn">
                             Submit
                         </button>
