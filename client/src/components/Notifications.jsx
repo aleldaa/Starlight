@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-function Notifications({ users, friends, setRequest, setRequest2 }) {
+function Notifications({ users, setRequest, setRequest2 }) {
   const [notifications, setNotifications] = useState([]);
-  // const [request, setRequest] = useState({ status: "", user_id: users.id })
-  // const [request2, setRequest2] = useState({status: "", user_id: friends.id})
 
   useEffect(() => {
     fetch(`/api/notifications/${users.id}`)

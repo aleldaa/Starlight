@@ -13,7 +13,6 @@ function Comments({ id, content, user, currentUser, deletedComment }) {
     }, [currentUser, user]);
 
     function handleDelete(id) {
-        console.log(id)
         deletedComment(id)
         fetch(`/api/comments/${id}`, {
             method: 'DELETE'

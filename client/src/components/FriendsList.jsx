@@ -60,9 +60,6 @@ console.log(users.id)
           <button onClick={handleClick} className="friend-btn-wrap">
             <img className="friend-btn" src="/src/images/add-user.png" alt="Add Friend" />
           </button>
-          {/* <button className="friend-btn-wrap">
-              <img className="friend-btn" src="/src/images/remove-user.png" alt="Remove Friend" />
-            </button> */}
         </div>
       </div>
     </div>

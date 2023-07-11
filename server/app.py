@@ -408,8 +408,9 @@ class Login(Resource):
 class CheckSession(Resource):
     def get(self):
         if session.get('user_id'):
-            user = User.query.filter(User.id == session['user_id']).first()
-            return user.to_dict(), 200
+            user = User.query.filter(User.id == session.get('user_id')).first()
+            if user:
+                return user.to_dict(), 200
         return None, 404
 
 class Logout(Resource):
