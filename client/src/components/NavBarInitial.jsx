@@ -4,7 +4,7 @@ function NavBarInitial(){
             <div className="header">
                 <div className='init-title'>
                     <h1>Starlight</h1>
-                    <img className='logo' src="/src/images/starry-night.png"/>
+                    <img className='logo' src="/client/src/images/starry-night.png"/>
                 </div>
             </div>
         </nav>

@@ -21,30 +21,30 @@ function NavBar({setUsers}){
         <nav className="navbar">
             <div className="header">
                 <div className='main-title'>
-                    <img onClick={handleClick} className='logo' src="/src/images/starry-night.png"/>
+                    <img onClick={handleClick} className='logo' src="/client/src/images/starry-night.png"/>
                     <div className="navbar-elements">
                             <NavLink to="/home" className='navLink'>
-                                <img className="home-icon" src='src/images/home.png'/>
+                                <img className="home-icon" src='/client/src/images/home.png'/>
                             </NavLink>
                             <NavLink to='/profile' className='navLink'>
-                                <img className="profile-icon" src="/src/images/profile.png"/>
+                                <img className="profile-icon" src="/client/src/images/profile.png"/>
                             </NavLink>
                             {/* <NavLink to='/messages' className='navLink'>
                                 <img className="message-icon" src="/src/images/chat.png"/>
                             </NavLink> */}
                             <NavLink to='/friends' className='navLink'>
-                                <img className="friends-icon" src="/src/images/learning.png"/>
+                                <img className="friends-icon" src="/client/src/images/learning.png"/>
                             </NavLink>
                             {/* <NavLink to='/music' className='navLink'>
                                 <img className="music-icon" src='/src/images/music.png'/>
                             </NavLink> */}
                             <NavLink to='/notifications' className='navLink'>
-                                <img className="notif-icon" src="/src/images/bell.png"/>
+                                <img className="notif-icon" src="/client/src/images/bell.png"/>
                             </NavLink>
                     </div>
                     <div className="logout-button">
                         <NavLink onClick={handleLogout} to='/logout' className='logoutlink'>
-                            <img src="/src/images/logout.png" className="logout-icon"/>
+                            <img src="/client/src/images/logout.png" className="logout-icon"/>
                         </NavLink>
                     </div>
                 </div>
