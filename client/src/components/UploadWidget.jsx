@@ -39,7 +39,7 @@ function UploadWidget({ setFriends, setComments, setPosts, setUsers, users, setP
     return (
         <div className="upload-btn-wrapper">
             <button className="upload-button" onClick={() => widgetRef.current.open()}>
-                <img className="button-img" src="/src/images/camera.png" />
+                <img className="button-img" src="/images/camera.png" />
             </button>
         </div>
     )

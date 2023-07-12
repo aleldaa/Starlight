@@ -36,7 +36,7 @@ function UserComments({ id, content, user, currentUser, deletedComment }) {
                 <AdvancedImage
                     onError={({ currentTarget }) => {
                         currentTarget.onerror = null;
-                        currentTarget.src = '/src/images/profile-pic-default.png';
+                        currentTarget.src = '/images/profile-pic-default.png';
                     }}
                     className='comment-pic'
                     cldImg={profilePic}

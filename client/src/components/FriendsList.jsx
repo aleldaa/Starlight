@@ -47,7 +47,7 @@ console.log(users.id)
         <AdvancedImage
           onError={({ currentTarget }) => {
             currentTarget.onerror = null;
-            currentTarget.src = '/src/images/profile-pic-default.png';
+            currentTarget.src = '/images/profile-pic-default.png';
           }}
           className='friend-pic'
           cldImg={profilePic}
@@ -58,7 +58,7 @@ console.log(users.id)
         </div>
         <div>
           <button onClick={handleClick} className="friend-btn-wrap">
-            <img className="friend-btn" src="/src/images/add-user.png" alt="Add Friend" />
+            <img className="friend-btn" src="/images/add-user.png" alt="Add Friend" />
           </button>
         </div>
       </div>

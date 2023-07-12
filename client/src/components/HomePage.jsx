@@ -59,7 +59,7 @@ function HomePage({ deletedLike, likes, setLikes, posts, users, setPosts, delete
             <div className='homepage-wrapper'>
                 <dialog ref={dialogRef} className="favDialog">
                 <button className='cancel-btn-wrap' onClick={onClose}>
-                    <img className='cancel-btn' src='/src/images/cancel.png'/>
+                    <img className='cancel-btn' src='/images/cancel.png'/>
                 </button>
                     <div className='post-name'>
                         <h1>{users.name}</h1>

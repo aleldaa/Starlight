@@ -101,14 +101,14 @@ function Posts({ deletedLike, likes, setLikes, posts, id, content, user, current
           {isCurrentUserPost && (
             <div className="delete-btn-wrap">
               <button onClick={() => handleDelete(id)} className="delete-btn">
-                <img className="delete-btn-img" src="/src/images/delete.png" />
+                <img className="delete-btn-img" src="/images/delete.png" />
               </button>
             </div>
           )}
           <AdvancedImage
             onError={({ currentTarget }) => {
               currentTarget.onerror = null;
-              currentTarget.src = '/src/images/profile-pic-default.png';
+              currentTarget.src = '/images/profile-pic-default.png';
             }}
             className='post-pic'
             cldImg={profilePic}
@@ -118,11 +118,11 @@ function Posts({ deletedLike, likes, setLikes, posts, id, content, user, current
         <h4 className="post-content">{content}</h4>
         {favorite ? (
           <button onClick={()=>{handleClick(); handleLikePost()}} className="like-btn">
-            <img className="like-btn-heart" src="/src/images/heart.png" />
+            <img className="like-btn-heart" src="/images/heart.png" />
           </button>
         ) : (
           <button onClick={()=>{handleClick(); handleLikeDelete()}} className="like-btn2">
-            <img className="like-btn-heart" src="/src/images/heart.png" />
+            <img className="like-btn-heart" src="/images/heart.png" />
           </button>
         )}
         <div className="comments">
@@ -131,7 +131,7 @@ function Posts({ deletedLike, likes, setLikes, posts, id, content, user, current
             <AdvancedImage
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null;
-                currentTarget.src = '/src/images/profile-pic-default.png';
+                currentTarget.src = '/images/profile-pic-default.png';
               }}
               className='comment-pic2'
               cldImg={commentPic}
@@ -139,7 +139,7 @@ function Posts({ deletedLike, likes, setLikes, posts, id, content, user, current
             <form className="comment-form" onSubmit={handleSubmit}>
               <textarea value={comment.content} className="comment-textarea" onChange={handleContentChange} placeholder="Write a comment..." />
               <button className="comment-submit" type="submit">
-                <img className="comment-submit-img" src="/src/images/paper-plane.png" />
+                <img className="comment-submit-img" src="/images/paper-plane.png" />
               </button>
             </form>
           </div>

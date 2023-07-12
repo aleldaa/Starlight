@@ -28,7 +28,7 @@ function UploadWidget2({users, setBannerUrl}){
     return(
         <div className="upload-btn-wrapper2">
             <button className="upload-button2" onClick={()=> widgetRef.current.open()}>
-                <img className="button-img2" src="/src/images/camera.png"/>
+                <img className="button-img2" src="/images/camera.png"/>
             </button>
         </div>
     )

@@ -69,7 +69,7 @@ function UserPosts({ comments, deletedComment, setComments, id, deletedPost, pos
                     <AdvancedImage
                         onError={({ currentTarget }) => {
                             currentTarget.onerror = null;
-                            currentTarget.src = '/src/images/profile-pic-default.png';
+                            currentTarget.src = '/images/profile-pic-default.png';
                         }}
                         className='post-pic'
                         cldImg={profilePic}
@@ -79,7 +79,7 @@ function UserPosts({ comments, deletedComment, setComments, id, deletedPost, pos
                 <p className="post-content">{post.content}</p>
                 <div className="delete-btn-wrap">
                     <button onClick={() => handleDelete(id)} className="delete-btn3">
-                        <img className="delete-btn-img" src="/src/images/delete.png" />
+                        <img className="delete-btn-img" src="/images/delete.png" />
                     </button>
                 </div>
                 <div className="comments">
@@ -88,7 +88,7 @@ function UserPosts({ comments, deletedComment, setComments, id, deletedPost, pos
                         <AdvancedImage
                             onError={({ currentTarget }) => {
                                 currentTarget.onerror = null;
-                                currentTarget.src = '/src/images/profile-pic-default.png';
+                                currentTarget.src = '/images/profile-pic-default.png';
                             }}
                             className='comment-pic2'
                             cldImg={commentPic}
@@ -96,7 +96,7 @@ function UserPosts({ comments, deletedComment, setComments, id, deletedPost, pos
                         <form className="comment-form" onSubmit={handleSubmit}>
                             <textarea value={comment.content} className="comment-textarea" onChange={handleContentChange} placeholder="Write a comment..." />
                             <button className="comment-submit" type="submit">
-                                <img className="comment-submit-img" src="/src/images/paper-plane.png" />
+                                <img className="comment-submit-img" src="/images/paper-plane.png" />
                             </button>
                         </form>
                     </div>
