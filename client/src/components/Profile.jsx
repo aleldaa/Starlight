@@ -56,7 +56,7 @@ function Profile({ setFriend, setUsers, setComments, comments, deletedPost, dele
       <AdvancedImage
         onError={({ currentTarget }) => {
           currentTarget.onerror = null;
-          currentTarget.src = '/client/src/images/profile-pic-default.png';
+          currentTarget.src = '/src/images/profile-pic-default.png';
         }}
         className='profile-friend-pic'
         cldImg={cld.image(proImage)}
@@ -102,7 +102,7 @@ function Profile({ setFriend, setUsers, setComments, comments, deletedPost, dele
             <AdvancedImage
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null;
-                currentTarget.src = '/client/src/images/upload_default.jpg';
+                currentTarget.src = '/src/images/upload_default.jpg';
               }}
               className='banner'
               cldImg={cld.image(bannerUrl).resize(fill().width(900).height(300))}
@@ -120,7 +120,7 @@ function Profile({ setFriend, setUsers, setComments, comments, deletedPost, dele
               cldImg={cld.image(profilePicUrl).resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face())))}
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null;
-                currentTarget.src = '/client/src/images/profile-pic-default.png';
+                currentTarget.src = '/src/images/profile-pic-default.png';
               }} />
           </div>
         </div>
@@ -129,7 +129,7 @@ function Profile({ setFriend, setUsers, setComments, comments, deletedPost, dele
         </div>
         <dialog ref={dialogRef} className="favDialog">
           <button className='cancel-btn-wrap' onClick={onClose}>
-            <img className='cancel-btn' src='/client/src/images/cancel.png' />
+            <img className='cancel-btn' src='/src/images/cancel.png' />
           </button>
           <div className='post-name'>
             <h1>{users.name}</h1>
