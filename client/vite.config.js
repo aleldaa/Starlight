@@ -9,7 +9,7 @@ export default defineConfig({
     cors:true,
     proxy: {
       "/api":{
-        target: "http://127.0.0.1:5555",
+        target: "https://mystarlight.onrender.com",
         changeOrigin:true,
         secure: false,
         rewrite: (path)=>path.replace(/^\/api/,"")
